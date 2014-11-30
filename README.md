@@ -40,7 +40,7 @@ And in your appication admin avaliable new page with this settings
 You can localize settings keys in local file
 
 ``` yml
-ru:
+en:
   settings:
     attributes:
       my_awesome_settings:
