@@ -1,6 +1,6 @@
-# ActiveadminSettingsCached
+# Activeadmin Settings Cached
 
-TODO: Write a gem description
+Gem for Rails provides ui interface for rails-settings-cached gem in Active Admin 
 
 ## Installation
 
@@ -14,18 +14,26 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Create you settings model:
 
-    $ gem install activeadmin_settings_cached
+    $ rails g settings Settings
+    $ bundle exec rake db:migrate
 
-## Usage
+Add route in config/routes.rb
 
-TODO: Write usage instructions here
+``` ruby
+ActiveAdmin.routes(self)
+mount ActiveadminSettingsCached::Engine => '/admin' 
+```
 
-## Contributing
+And configure you default values in model Settings like this:
 
-1. Fork it ( https://github.com/[my-github-username]/activeadmin_settings_cached/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+``` ruby
+class Settings < RailsSettings::CachedSettings
+   defaults[:my_awesome_settings] = 'This is my settings'
+end
+```
+
+And in your appication admin avaliable new page with this settings
+
+For how use Settings in you application see documentation fo rails-settings-cached gem https://github.com/huacnlee/rails-settings-cached
