@@ -36,4 +36,15 @@ end
 
 And in your appication admin avaliable new page with this settings
 
+# Localization
+You can localize settings keys in local file
+
+``` yml
+ru:
+  settings:
+    attributes:
+      my_awesome_settings:
+        name: 'My Awesome Lolaized Setting'
+```
+
 For how use Settings in you application see documentation fo rails-settings-cached gem https://github.com/huacnlee/rails-settings-cached
