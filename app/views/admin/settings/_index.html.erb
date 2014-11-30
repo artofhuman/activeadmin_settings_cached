@@ -1,0 +1,25 @@
+<div>
+  <%= semantic_form_for :settings, :method => :put, url: activeadmin_settings_cached.settings_path do |f| %>
+    <table id="settings" class="index_table index">
+    <thead>
+      <tr>
+        <th style="width: 30%"><%= t('settings.index.name')%></th>
+        <th><%= t('settings.index.value')%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% controller.settings_list.each_pair do |name,  value| %>
+        <tr class="odd">
+          <td><strong><%= t("settings.attributes.#{name}.name") %></strong></td>
+          <td>
+            <div class='form'>
+              <ol><%= f.input name, label: false, input_html: { value: value } %></ol>
+            </div>
+          </td>
+        </tr>
+      <% end%>
+    </tbody>
+  </table>
+  <%= f.submit %>
+<% end %>
+</div>

@@ -1,0 +1,11 @@
+ru:
+  activerecord:
+    models:
+      setings: 'Настройки'
+
+  settings:
+    menu:
+      label: 'Настройки'
+    index:
+      name: 'Название'
+      value: 'Значение'
