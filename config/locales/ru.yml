@@ -1,7 +1,7 @@
 ru:
   activerecord:
     models:
-      setings: 'Настройки'
+      settings: 'Настройки'
 
   settings:
     menu:
