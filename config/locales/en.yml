@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    models:
+      settings: 'Settings'
+
+  settings:
+    menu:
+      label: 'Settings'
+    index:
+      name: 'Name'
+      value: 'Value'
