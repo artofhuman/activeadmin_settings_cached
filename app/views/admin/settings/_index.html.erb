@@ -10,7 +10,7 @@
       <tbody>
         <% controller.settings_list.each_pair do |name,  value| %>
           <tr class="odd">
-            <td><strong><%= t("settings.attributes.#{name}.name") %></strong></td>
+            <td><strong><%= t("settings.attributes.#{name}.name", default: name) %></strong></td>
             <td>
               <div class='form'>
                 <ol><%= f.input name, label: false, input_html: { value: value } %></ol>
