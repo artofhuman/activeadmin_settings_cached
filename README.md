@@ -1,5 +1,7 @@
 # Activeadmin Settings Cached
 
+[![Gem Version](https://badge.fury.io/rb/activeadmin_settings_cached.svg)](http://badge.fury.io/rb/activeadmin_settings_cached)
+
 Gem for Rails provides ui interface for rails-settings-cached gem in Active Admin 
 
 ## Installation
