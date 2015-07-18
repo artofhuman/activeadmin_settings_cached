@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Settings" do
-  title = I18n.t('settings.menu.label')
+  title = proc { I18n.t('settings.menu.label') }
 
   menu label: title, priority: 99
 
