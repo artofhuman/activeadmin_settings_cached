@@ -1,4 +1,9 @@
 en:
+  activeadmin_settings_cached:
+    settings:
+      update:
+        success: Settings was successfully updated.
+
   activerecord:
     models:
       settings: 'Settings'

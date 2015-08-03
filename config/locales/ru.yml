@@ -1,4 +1,9 @@
 ru:
+  activeadmin_settings_cached:
+    settings:
+      update:
+        success: Настройки были успешно сохранены.
+
   activerecord:
     models:
       settings: 'Настройки'
