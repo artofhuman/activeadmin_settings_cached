@@ -2,7 +2,7 @@ require "activeadmin_settings_cached/engine"
 
 module ActiveadminSettingsCached
   mattr_accessor :settings_class
-  self.settings_class = "Settings"
+  self.settings_class = "Setting"
 
   class << self
     def settings_klass
