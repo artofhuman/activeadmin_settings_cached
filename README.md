@@ -49,4 +49,11 @@ en:
         name: 'My Awesome Lolaized Setting'
 ```
 
+If you settings model named not Settings, you can define model name in
+`config/initializers/active_admin_settings_cached.rb`
+
+``` ruby
+ActiveadminSettingsCached.settings_class = 'AdvancedSetting'
+```
+
 For how use Settings in you application see documentation fo rails-settings-cached gem https://github.com/huacnlee/rails-settings-cached
