@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/activeadmin_settings_cached.svg)](http://badge.fury.io/rb/activeadmin_settings_cached)
 
-Gem for Rails provides ui interface for rails-settings-cached gem in Active Admin 
+Provides a nice UI interface for [rails-settings-cached](https://github.com/huacnlee/rails-settings-cached) gem in [Active Admin](http://activeadmin.info/).
 
 ## Installation
 
@@ -16,19 +16,19 @@ And then execute:
 
     $ bundle
 
-Create you settings model:
+Create your settings model:
 
     $ rails g settings Settings
     $ bundle exec rake db:migrate
 
-Add route in config/routes.rb
+Add a route in config/routes.rb
 
 ``` ruby
 ActiveAdmin.routes(self)
 mount ActiveadminSettingsCached::Engine => '/admin' 
 ```
 
-And configure you default values in model Settings like this:
+And configure your default values in your Settings model:
 
 ``` ruby
 class Settings < RailsSettings::CachedSettings
@@ -36,7 +36,7 @@ class Settings < RailsSettings::CachedSettings
 end
 ```
 
-And in your appication admin avaliable new page with this settings
+In your application's admin interface, there will now be a new page with this setting
 
 # Localization
 You can localize settings keys in local file
@@ -48,12 +48,10 @@ en:
       my_awesome_settings:
         name: 'My Awesome Lolaized Setting'
 ```
+# Model name
 
-If you settings model named not Settings, you can define model name in
-`config/initializers/active_admin_settings_cached.rb`
+By default the name of the mode is `Settings`. If you want to use a different name for the model, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
 
 ``` ruby
 ActiveadminSettingsCached.settings_class = 'AdvancedSetting'
 ```
-
-For how use Settings in you application see documentation fo rails-settings-cached gem https://github.com/huacnlee/rails-settings-cached
