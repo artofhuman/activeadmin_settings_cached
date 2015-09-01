@@ -38,7 +38,7 @@ end
 
 In your application's admin interface, there will now be a new page with this setting
 
-# Localization
+## Localization
 You can localize settings keys in local file
 
 ``` yml
@@ -48,7 +48,7 @@ en:
       my_awesome_settings:
         name: 'My Awesome Lolaized Setting'
 ```
-# Model name
+## Model name
 
 By default the name of the mode is `Settings`. If you want to use a different name for the model, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
 
