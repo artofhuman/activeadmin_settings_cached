@@ -25,7 +25,7 @@ Add a route in config/routes.rb
 
 ``` ruby
 ActiveAdmin.routes(self)
-mount ActiveadminSettingsCached::Engine => '/admin' 
+mount ActiveadminSettingsCached::Engine => '/admin'
 ```
 
 And configure your default values in your Settings model:
@@ -53,5 +53,21 @@ en:
 By default the name of the mode is `Settings`. If you want to use a different name for the model, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
 
 ``` ruby
-ActiveadminSettingsCached.settings_class = 'AdvancedSetting'
+ActiveadminSettingsCached.configure do |config|
+  config.model_name = 'AdvancedSetting'
+end
+```
+
+## Dsiplay options
+
+If you need define display options for settings fields, eg textarea, url or :timestamp and etc., you can set `display` option in initializer.
+
+
+``` ruby
+ActiveadminSettingsCached.configure do |config|
+  condig.display = {
+    my_awesome_setting_name: :text,
+    my_awesome_setting_name_2: timestamp:
+  }
+end
 ```

@@ -8,8 +8,10 @@ ActiveAdmin.register_page "Settings" do
   end
 
   controller do
+    helper :settings
+
     def settings_list
-      settings = ActiveadminSettingsCached.settings_klass
+      settings = ActiveadminSettingsCached.config.model_name
       settings.defaults.merge!(settings.get_all)
     end
   end

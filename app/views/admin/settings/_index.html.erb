@@ -13,7 +13,7 @@
             <td><strong><%= f.label t("settings.attributes.#{name}.name", default: name) %></strong></td>
             <td>
               <div class='form'>
-                <ol><%= f.input name, label: false, input_html: { value: value } %></ol>
+                <ol><%= f.input name, as: settings_field_type(name), label: false, input_html: { value: value } %></ol>
               </div>
             </td>
           </tr>

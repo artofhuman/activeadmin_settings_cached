@@ -1,10 +1,8 @@
 module ActiveadminSettingsCached
   class SettingsController < ApplicationController
     def update
-      settings = ActiveadminSettingsCached.settings_klass
-
       settings_params.each_pair do |name, value|
-        settings[name] = value
+        settings_model[name] = value
       end
 
       flash[:success] = t('.success'.freeze)
@@ -14,9 +12,11 @@ module ActiveadminSettingsCached
     private
 
     def settings_params
-      settings_keys = ActiveadminSettingsCached.settings_klass.defaults.keys
+      params.require(:settings).permit(settings_model.defaults.keys)
+    end
 
-      params.require(:settings).permit(settings_keys)
+    def settings_model
+      ActiveadminSettingsCached.config.model_name
     end
   end
 end
