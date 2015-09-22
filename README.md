@@ -58,7 +58,7 @@ ActiveadminSettingsCached.configure do |config|
 end
 ```
 
-## Dsiplay options
+## Display options
 
 If you need define display options for settings fields, eg textarea, url or :timestamp and etc., you can set `display` option in initializer.
 
@@ -67,7 +67,10 @@ If you need define display options for settings fields, eg textarea, url or :tim
 ActiveadminSettingsCached.configure do |config|
   condig.display = {
     my_awesome_setting_name: :text,
-    my_awesome_setting_name_2: timestamp:
+    my_awesome_setting_name_2: :timestamp,
+    my_awesome_setting_name_3: :select
   }
 end
 ```
+
+Available options see [here](https://github.com/justinfrench/formtastic#the-available-inputs)
