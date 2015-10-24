@@ -23,7 +23,7 @@ module ActiveadminSettingsCached
     end
 
     def settings
-      config.model_name.public_send(meth)
+      defaults.merge! config.model_name.public_send(meth)
     end
 
     def defaults
