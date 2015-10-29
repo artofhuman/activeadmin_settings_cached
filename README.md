@@ -65,7 +65,7 @@ If you need define display options for settings fields, eg textarea, url or :tim
 
 ``` ruby
 ActiveadminSettingsCached.configure do |config|
-  condig.display = {
+  config.display = {
     my_awesome_setting_name: :text,
     my_awesome_setting_name_2: :timestamp,
     my_awesome_setting_name_3: :select
