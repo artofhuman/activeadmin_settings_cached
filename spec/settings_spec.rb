@@ -105,11 +105,11 @@ describe 'settings', type: :feature, js: true do
   end
 
   def check_base_setting
-    expect(page).to have_selector("input[value='#{Setting['base.first_setting']}'")
+    expect(page).to have_selector("input[value='#{Setting['base.first_setting']}']")
   end
 
   def check_second_setting
-    expect(page).to have_selector("input[value='#{Setting['second.second_setting']}'")
+    expect(page).to have_selector("input[value='#{Setting['second.second_setting']}']")
   end
 
   def fill_base_setting
