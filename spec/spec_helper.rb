@@ -23,7 +23,6 @@ require 'active_model'
 require 'active_record'
 require 'active_admin'
 require 'turbolinks'
-require 'sqlite3'
 ActiveAdmin.application.load_paths = [ENV['RAILS_ROOT'] + '/app/admin']
 require ENV['RAILS_ROOT'] + '/config/environment.rb'
 # Disabling authentication in specs so that we don't have to worry about
