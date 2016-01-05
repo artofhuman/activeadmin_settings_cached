@@ -3,8 +3,12 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in activeadmin_settings_cached.gemspec
 gemspec
 
+group :development do
+  gem 'rubocop'
+end
+
 group :test do
-  gem 'rails',  '~> 4.2.5'
+  gem 'rails', '~> 4.2.5'
   gem 'turbolinks'
   gem 'rspec-rails'
   gem 'rails-settings-cached', github: 'merqlove/rails-settings-cached'
