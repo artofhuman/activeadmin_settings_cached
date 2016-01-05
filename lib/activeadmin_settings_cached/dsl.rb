@@ -1,6 +1,5 @@
 module ActiveadminSettingsCached
   module DSL
-
     # Declares settings function
     #
     # Options:
@@ -17,7 +16,7 @@ module ActiveadminSettingsCached
 
       options = Options.options_for(options)
 
-      content title: options[:title]  do
+      content title: options[:title] do
         render partial: options[:template], locals: { settings_model: options[:template_object] }
       end
 
@@ -36,7 +35,7 @@ module ActiveadminSettingsCached
         redirect_to :back
       end
 
-      instance_eval &block if block_given?
+      instance_eval(&block) if block_given?
     end
   end
 end

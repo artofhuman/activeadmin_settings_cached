@@ -1,18 +1,17 @@
 module ActiveadminSettingsCached
-
   module Options
     VALID_OPTIONS = [
-        :model_name,
-        :scope,
-        :template,
-        :template_object,
-        :display,
-        :priority,
-        :title
+      :model_name,
+      :scope,
+      :template,
+      :template_object,
+      :display,
+      :priority,
+      :title
     ].freeze
 
-    def self.options_for(options= {})
-      options[:template_object] = ActiveadminSettingsCached::Model.new(options) unless options.has_key? :template_object
+    def self.options_for(options = {})
+      options[:template_object] = ActiveadminSettingsCached::Model.new(options) unless options.key? :template_object
 
       {
         template: 'admin/settings/index',
@@ -20,6 +19,5 @@ module ActiveadminSettingsCached
         title: I18n.t('settings.menu.label')
       }.deep_merge(options)
     end
-
   end
 end

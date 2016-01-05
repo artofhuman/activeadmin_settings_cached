@@ -4,7 +4,7 @@ module ActiveadminSettingsCached
 
     attr_reader :attributes
 
-    def initialize(args={})
+    def initialize(args = {})
       @attributes = {}
       args[:model_name] = args[:model_name].constantize if args[:model_name].is_a? String
       args[:display] = default_attributes[:display].merge!(args[:display]) if args[:display]
@@ -35,7 +35,7 @@ module ActiveadminSettingsCached
       false
     end
 
-    alias :to_hash :attributes
+    alias_method :to_hash, :attributes
 
     protected
 
@@ -52,7 +52,7 @@ module ActiveadminSettingsCached
     end
 
     def merge_attributes(args)
-      default_attributes.each_with_object(Hash.new) do |(k,v), h|
+      default_attributes.each_with_object({}) do |(k, v), h|
         h[k] = args[k] || v
       end
     end
