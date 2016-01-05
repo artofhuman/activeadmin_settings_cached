@@ -19,14 +19,11 @@ module ActiveadminSettingsCached
         render partial: options[:template], locals: { settings_model: options[:template_object] }
       end
 
-      controller do
-        helper :settings
-      end
-
       page_action :update, method: :post do
         settings_params = params.require(:settings).permit(options[:template_object].defaults.keys)
+        coercion = Coercions.new(settings_params, options[:template_object].defaults, options[:template_object].display)
 
-        settings_params.each_pair do |name, value|
+        coercion.cast_params do |name, value|
           options[:template_object][name] = value
         end
 

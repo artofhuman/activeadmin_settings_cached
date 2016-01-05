@@ -11,6 +11,30 @@ module ActiveadminSettingsCached
       assign_attributes(merge_attributes(args))
     end
 
+    def field_options(settings_name)
+      default_value = defaults[settings_name]
+      value = settings[settings_name]
+
+      input_opts = if default_value.is_a?(Array)
+                     {
+                         collection: default_value,
+                         selected: value,
+                     }
+                   elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
+                       display[settings_name] == 'boolean'
+                     {
+                         input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
+                     }
+                   else
+                     {
+                         input_html: { value: value, placeholder: default_value },
+                     }
+                   end
+
+      { as: display[settings_name], label: false }
+          .merge!(input_opts)
+    end
+
     def settings
       settings_model.public_send(meth, attributes[:starting_with])
     end
