@@ -1,4 +1,3 @@
-require 'activeadmin_settings_cached/engine'
 require 'active_admin'
 require 'activeadmin_settings_cached/version'
 require 'activeadmin_settings_cached/engine'
