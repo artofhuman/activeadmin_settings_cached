@@ -21,12 +21,9 @@ Create your settings model:
     $ rails g settings Settings
     $ bundle exec rake db:migrate
 
-Add a route in config/routes.rb
+Create your settings page:
 
-``` ruby
-ActiveAdmin.routes(self)
-mount ActiveadminSettingsCached::Engine => '/admin'
-```
+    $ rails g active_admin:settings Settings
 
 And configure your default values in your Settings model:
 

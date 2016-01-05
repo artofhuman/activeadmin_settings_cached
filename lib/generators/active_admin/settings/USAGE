@@ -1,0 +1,8 @@
+Description:
+    Registers settings with Active Admin
+
+Example:
+    rails generate active_admin:settings Thing
+
+    This will create:
+        app/admin/thing.rb

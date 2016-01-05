@@ -1,4 +1,11 @@
-require "activeadmin_settings_cached/engine"
+require 'activeadmin_settings_cached/engine'
+require 'active_admin'
+require 'activeadmin_settings_cached/version'
+require 'activeadmin_settings_cached/engine'
+require 'activeadmin_settings_cached/options'
+require 'activeadmin_settings_cached/dsl'
+require 'activeadmin_settings_cached/model'
+::ActiveAdmin::DSL.send(:include, ActiveadminSettingsCached::DSL)
 
 module ActiveadminSettingsCached
   class Configuration
@@ -20,24 +27,6 @@ module ActiveadminSettingsCached
 
     def configure
       yield config
-    end
-
-    def settings
-      defaults.merge! config.model_name.public_send(meth)
-    end
-
-    def defaults
-      config.model_name.defaults
-    end
-
-    private
-
-    def meth
-      if Rails.version >= '4.1.0'
-        :get_all
-      else
-        :all
-      end
     end
   end
 end

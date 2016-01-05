@@ -1,7 +1,7 @@
 module SettingsHelper
-  def settings_field_options(settings_name)
-    default_value = ActiveadminSettingsCached.defaults[settings_name]
-    value = ActiveadminSettingsCached.settings[settings_name]
+  def settings_field_options(settings_name, settings_model)
+    default_value = settings_model.defaults[settings_name]
+    value = settings_model.settings[settings_name]
 
     input_opts = if default_value.is_a?(Array)
                   {
@@ -14,7 +14,7 @@ module SettingsHelper
                   }
                 end
 
-    {as: ActiveadminSettingsCached.config.display[settings_name], label: false}
+    {as: settings_model.display[settings_name], label: false}
       .merge!(input_opts)
   end
 end
