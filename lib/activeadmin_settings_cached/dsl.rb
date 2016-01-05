@@ -30,7 +30,7 @@ module ActiveadminSettingsCached
           options[:template_object][name] = value
         end
 
-        flash[:success] = t('.success'.freeze)
+        flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
         redirect_to :back
       end
 
