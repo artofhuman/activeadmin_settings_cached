@@ -23,7 +23,7 @@ Create your settings model:
 
 Create your settings page:
 
-    $ rails g active_admin:settings Settings
+    $ rails g active_admin:settings Settings    
 
 And configure your default values in your Settings model:
 
@@ -34,6 +34,28 @@ end
 ```
 
 In your application's admin interface, there will now be a new page with this setting
+
+## active_admin_settings_page DSL
+
+#### Basic usage
+
+```ruby
+ActiveAdmin.register_page 'Settings' do
+  menu label: 'Settings', priority: 99
+  active_admin_settings_page options
+end
+```
+
+#### Options
+Tool                    | Description
+---------------------   | -----------
+:model_name					|String, settings model name override (default: uses name from global config.)
+:scope			|String, scope in which we will show/edit settings, (default: nil) 
+:template				|String, custom template rendering (default: 'admin/settings/index')
+:template_object				|object passing to view (default: ActiveadminSettingsCached::Model instance)
+:display    |Hash, display settings override (default: {})
+:title			|String, title value override (default: I18n.t('settings.menu.label'))
+ 
 
 ## Localization
 You can localize settings keys in local file

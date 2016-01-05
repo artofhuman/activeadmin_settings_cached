@@ -3,15 +3,14 @@ module ActiveadminSettingsCached
     # Declares settings function
     #
     # Options:
-    # +model_name+:: settings model name to constantize
-    # +scope+:: scope in which we will edit settings
-    # +template+:: custom template rendering
-    # +template_object+:: object to use in templates, ActiveadminSettingsCached::Model instance
-    # +display+:: display settings
-    # +priority+:: menu priority
-    # +title+:: title value (default I18n.t('settings.menu.label'))
+    # +model_name+:: settings model name override (default: uses name from global config.)
+    # +scope+:: scope in which we will show/edit settings, (default: nil)
+    # +template+:: custom template rendering (default: 'admin/settings/index')
+    # +template_object+:: object to use in templates (default: ActiveadminSettingsCached::Model instance)
+    # +display+:: display settings override (default: nil)
+    # +title+:: title value override (default: I18n.t('settings.menu.label'))
     #
-    def active_admin_settings(options = {}, &block)
+    def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*Options::VALID_OPTIONS)
 
       options = Options.options_for(options)

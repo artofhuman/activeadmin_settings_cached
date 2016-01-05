@@ -6,7 +6,6 @@ module ActiveadminSettingsCached
       :template,
       :template_object,
       :display,
-      :priority,
       :title
     ].freeze
 
@@ -15,7 +14,6 @@ module ActiveadminSettingsCached
 
       {
         template: 'admin/settings/index',
-        priority: 99,
         title: I18n.t('settings.menu.label')
       }.deep_merge(options)
     end
