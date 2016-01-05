@@ -4,7 +4,7 @@ module ActiveadminSettingsCached
     #
     # Options:
     # +model_name+:: settings model name override (default: uses name from global config.)
-    # +scope+:: scope in which we will show/edit settings, (default: nil)
+    # +starting_with+:: each key must starting with, (default: nil)
     # +template+:: custom template rendering (default: 'admin/settings/index')
     # +template_object+:: object to use in templates (default: ActiveadminSettingsCached::Model instance)
     # +display+:: display settings override (default: nil)

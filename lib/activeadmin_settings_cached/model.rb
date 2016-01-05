@@ -12,7 +12,7 @@ module ActiveadminSettingsCached
     end
 
     def settings
-      settings_model.public_send(meth, attributes[:scope])
+      settings_model.public_send(meth, attributes[:starting_with])
     end
 
     def defaults
@@ -45,7 +45,7 @@ module ActiveadminSettingsCached
 
     def default_attributes
       {
-        scope: nil,
+        starting_with: nil,
         model_name: ActiveadminSettingsCached.config.model_name,
         display: ActiveadminSettingsCached.config.display
       }

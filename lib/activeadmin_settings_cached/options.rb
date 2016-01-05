@@ -2,7 +2,7 @@ module ActiveadminSettingsCached
   module Options
     VALID_OPTIONS = [
       :model_name,
-      :scope,
+      :starting_with,
       :template,
       :template_object,
       :display,

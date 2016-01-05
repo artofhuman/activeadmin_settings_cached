@@ -1,5 +1,5 @@
 def add_setting_resource(options = {}, &block)
-  options.merge!({model_name: 'Setting', scope: 'base.', title: 'Base Settings'})
+  options.merge!({model_name: 'Setting', starting_with: 'base.', title: 'Base Settings'})
   ActiveAdmin.register_page options[:title] do
     menu label: options[:title], priority: 99, parent: 'settings'
     active_admin_settings_page(options, &block)
@@ -8,7 +8,7 @@ def add_setting_resource(options = {}, &block)
 end
 
 def add_second_setting_resource(options = {}, &block)
-  options.merge!({model_name: 'Setting', scope: 'second.', title: 'Second Settings'})
+  options.merge!({model_name: 'Setting', starting_with: 'second.', title: 'Second Settings'})
   ActiveAdmin.register_page options[:title] do
     menu label: options[:title], priority: 99, parent: 'settings'
     active_admin_settings_page(options, &block)
