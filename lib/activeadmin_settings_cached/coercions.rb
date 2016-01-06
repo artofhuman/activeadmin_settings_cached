@@ -48,7 +48,7 @@ module ActiveadminSettingsCached
     def cast_value(name, value)
       case defaults[name]
       when TrueClass, FalseClass
-        display[name] == 'boolean' ? -> { string_to_boolean(value) } : -> { value }
+        display[name].to_s == 'boolean' ? -> { string_to_boolean(value) } : -> { value }
       when Integer
         -> { string_to_integer(value) }
       when Float

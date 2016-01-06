@@ -21,7 +21,7 @@ module ActiveadminSettingsCached
                        selected: value,
                      }
                    elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
-                         display[settings_name] == 'boolean'
+                         display[settings_name].to_s == 'boolean'
                      {
                        input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
                      }
