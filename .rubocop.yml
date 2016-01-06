@@ -16,6 +16,9 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 20
 
+Metrics/AbcSize:
+  Max: 30
+
 TrailingComma:
   Enabled: false
 AllCops:

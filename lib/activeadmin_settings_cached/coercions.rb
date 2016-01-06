@@ -2,22 +2,21 @@ module ActiveadminSettingsCached
   class Coercions
     attr_reader :defaults, :display
 
-    def initialize(params, defaults, display)
-      @params = params
+    def initialize(defaults, display)
       @defaults = defaults
       @display = display
 
       init_methods
     end
 
-    def cast_params
-      params = @params.map do |name, value|
+    def cast_params(params)
+      coerced_params = params.map do |name, value|
         [name, cast_value(name, value)]
       end
 
-      return params unless block_given?
+      return coerced_params unless block_given?
 
-      params.each do |name, value|
+      coerced_params.each do |name, value|
         yield(name, value.call)
       end
     end
@@ -34,11 +33,11 @@ module ActiveadminSettingsCached
       end
 
       coerce :float do |value|
-        Float value
+        String(value).to_f
       end
 
       coerce :integer do |value|
-        Float(value).to_i
+        String(value).to_i
       end
 
       coerce :symbol do |value|

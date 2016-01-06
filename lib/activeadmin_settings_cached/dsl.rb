@@ -14,6 +14,7 @@ module ActiveadminSettingsCached
       options.assert_valid_keys(*Options::VALID_OPTIONS)
 
       options = Options.options_for(options)
+      coercion = Coercions.new(options[:template_object].defaults, options[:template_object].display)
 
       content title: options[:title] do
         render partial: options[:template], locals: { settings_model: options[:template_object] }
@@ -21,9 +22,8 @@ module ActiveadminSettingsCached
 
       page_action :update, method: :post do
         settings_params = params.require(:settings).permit(options[:template_object].defaults.keys)
-        coercion = Coercions.new(settings_params, options[:template_object].defaults, options[:template_object].display)
 
-        coercion.cast_params do |name, value|
+        coercion.cast_params(settings_params) do |name, value|
           options[:template_object][name] = value
         end
 

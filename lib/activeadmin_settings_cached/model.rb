@@ -17,22 +17,22 @@ module ActiveadminSettingsCached
 
       input_opts = if default_value.is_a?(Array)
                      {
-                         collection: default_value,
-                         selected: value,
+                       collection: default_value,
+                       selected: value,
                      }
                    elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
-                       display[settings_name] == 'boolean'
+                         display[settings_name] == 'boolean'
                      {
-                         input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
+                       input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
                      }
                    else
                      {
-                         input_html: { value: value, placeholder: default_value },
+                       input_html: { value: value, placeholder: default_value },
                      }
                    end
 
       { as: display[settings_name], label: false }
-          .merge!(input_opts)
+        .merge!(input_opts)
     end
 
     def settings

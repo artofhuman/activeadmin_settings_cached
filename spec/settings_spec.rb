@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'settings', type: :feature, js: true do
+RSpec.describe 'settings', type: :feature, js: true do
   before do
     Setting.defaults['base.first_setting'] = 'AAA'
     Setting.defaults['base.second_setting'] = true

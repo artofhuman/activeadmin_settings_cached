@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ActiveadminSettingsCached::Model do
+RSpec.describe ActiveadminSettingsCached::Model do
   include ActiveModel::Lint::Tests
 
   ActiveModel::Lint::Tests.public_instance_methods.map{|m| m.to_s}.grep(/^test/).each do |m|
