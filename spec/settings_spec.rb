@@ -47,6 +47,34 @@ RSpec.describe 'settings', type: :feature, js: true do
     end
   end
 
+  context 'with custom template_object' do
+    context 'when right object' do
+      before do
+        template_object = ActiveadminSettingsCached::Model.new(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
+                                                                         'base.third_setting' => 'number', 'base.four_setting' => 'number',
+                                                                         'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
+        add_all_setting_resource(template_object: template_object)
+      end
+
+      it do
+        visit '/admin/base_settings'
+        check_base_setting
+      end
+    end
+
+    context 'when wrong object' do
+      before do
+        template_object = nil
+        add_all_setting_resource(template_object: template_object)
+      end
+
+      it do
+        visit '/admin/base_settings'
+        check_base_setting
+      end
+    end
+  end
+
   context 'per page' do
     before do
       ActiveadminSettingsCached.configure do |config|

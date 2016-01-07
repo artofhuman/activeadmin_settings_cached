@@ -1,5 +1,10 @@
 module ActiveadminSettingsCached
   class Coercions
+    SIMPLE_COERCIONS = {
+      float: :to_f,
+      integer: :to_i,
+      symbol: :to_sym
+    }
     attr_reader :defaults, :display
 
     def initialize(defaults, display)
@@ -32,16 +37,8 @@ module ActiveadminSettingsCached
         value && %w(true 1 yes y t).include?(value)
       end
 
-      coerce :float do |value|
-        String(value).to_f
-      end
-
-      coerce :integer do |value|
-        String(value).to_i
-      end
-
-      coerce :symbol do |value|
-        String(value).to_sym
+      SIMPLE_COERCIONS.each do |k, v|
+        coerce(k) { |value| String(value).send(v) }
       end
     end
 
