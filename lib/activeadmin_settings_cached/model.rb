@@ -36,7 +36,8 @@ module ActiveadminSettingsCached
     end
 
     def settings
-      settings_model.public_send(meth, attributes[:starting_with])
+      data = load_settings
+      ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }] if data
     end
 
     def defaults
@@ -62,6 +63,10 @@ module ActiveadminSettingsCached
     alias_method :to_hash, :attributes
 
     protected
+
+    def load_settings
+      settings_model.public_send(meth, attributes[:starting_with])
+    end
 
     def assign_attributes(args = {})
       @attributes.merge!(args)
