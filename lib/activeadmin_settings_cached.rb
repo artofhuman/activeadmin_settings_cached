@@ -1,11 +1,4 @@
-require 'active_admin'
-require 'activeadmin_settings_cached/version'
 require 'activeadmin_settings_cached/engine'
-require 'activeadmin_settings_cached/options'
-require 'activeadmin_settings_cached/coercions'
-require 'activeadmin_settings_cached/dsl'
-require 'activeadmin_settings_cached/model'
-::ActiveAdmin::DSL.send(:include, ActiveadminSettingsCached::DSL)
 
 module ActiveadminSettingsCached
   class Configuration
