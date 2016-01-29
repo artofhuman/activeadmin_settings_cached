@@ -1,13 +1,13 @@
 require 'rails-settings-cached'
+require 'active_admin'
 
 module ActiveadminSettingsCached
   class Engine < Rails::Engine
-    isolate_namespace ActiveadminSettingsCached
+    config.mount_at = '/'
+    config.autoload_paths += Dir["#{config.root}/lib"]
 
-    initializer 'activeadmin_settings_cached.admin' do
-      ActiveAdmin.before_load do |app|
-        app.load_paths << File.expand_path("../../../app/admin", __FILE__)
-      end
+    initializer 'activeadmin_settings_cached' do
+      ActiveAdmin::DSL.send(:include, ActiveadminSettingsCached::DSL)
     end
   end
 end

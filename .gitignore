@@ -6,9 +6,12 @@
 /doc/
 /pkg/
 /spec/reports/
+/spec/rails/
 /tmp/
 *.bundle
 *.so
 *.o
 *.a
+.ruby-version
+.idea
 mkmf.log
