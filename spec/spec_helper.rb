@@ -1,3 +1,5 @@
+require 'database_cleaner'
+
 require 'coveralls'
 Coveralls.wear!
 
@@ -52,16 +54,12 @@ unless ENV['CAPYBARA_FIREFOX']
 end
 
 RSpec.configure do |config|
-  config.use_transactional_fixtures = false
+  DatabaseCleaner.strategy = :truncation
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
-  end
   config.before(:each) do
-    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.start
   end
+
   config.after(:each) do
     DatabaseCleaner.clean
   end

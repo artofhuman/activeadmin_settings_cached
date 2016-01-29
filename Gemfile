@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 # Specify your gem's dependencies in activeadmin_settings_cached.gemspec
-gemspec
 
 group :test do
   gem 'turbolinks'
@@ -11,8 +10,9 @@ group :test do
   gem 'sass-rails'
   gem 'sqlite3'
   gem 'launchy'
-  gem 'database_cleaner'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'poltergeist'
 end
+
+gemspec
