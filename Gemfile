@@ -6,7 +6,6 @@ gemspec
 group :test do
   gem 'turbolinks'
   gem 'rspec-rails'
-  gem 'rails-settings-cached', github: 'huacnlee/rails-settings-cached'
   gem 'activeadmin', github: 'activeadmin/activeadmin', branch: 'ab1d8d1a4a1af748ae7009d9d725193d780d0059'
   gem 'coveralls', require: false
   gem 'sass-rails'
