@@ -10,7 +10,7 @@
       <tbody>
         <% settings_model.settings.each_pair do |name, _| %>
           <tr class="odd">
-            <td><strong><%= f.label t("settings.attributes.#{name}.name", default: name) %></strong></td>
+            <td><strong><%= f.label t("settings.attributes.#{name}", default: name) %></strong></td>
             <td>
               <div class='form'>
                 <ol><%= f.input name, settings_model.field_options(name) %></ol>
