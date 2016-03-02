@@ -19,8 +19,16 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'activeadmin'
-  s.add_dependency 'rails-settings-cached'
+  s.add_dependency 'rails-settings-cached', '>= 0.5.3'
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
+  s.add_development_dependency "coveralls"
+
+  s.add_development_dependency "database_cleaner"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency "selenium-webdriver"
+  s.add_development_dependency "poltergeist"
 end

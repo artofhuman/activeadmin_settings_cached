@@ -1,6 +1,7 @@
 # Activeadmin Settings Cached
 
 [![Gem Version](https://badge.fury.io/rb/activeadmin_settings_cached.svg)](http://badge.fury.io/rb/activeadmin_settings_cached)
+[![Build Status](https://travis-ci.org/artofhuman/activeadmin_settings_cached.svg?branch=master)](https://travis-ci.org/artofhuman/activeadmin_settings_cached)
 
 Provides a nice UI interface for [rails-settings-cached](https://github.com/huacnlee/rails-settings-cached) gem in [Active Admin](http://activeadmin.info/).
 
@@ -21,12 +22,9 @@ Create your settings model:
     $ rails g settings Settings
     $ bundle exec rake db:migrate
 
-Add a route in config/routes.rb
+Create your settings page:
 
-``` ruby
-ActiveAdmin.routes(self)
-mount ActiveadminSettingsCached::Engine => '/admin'
-```
+    $ rails g active_admin:settings Settings    
 
 And configure your default values in your Settings model:
 
@@ -38,6 +36,28 @@ end
 
 In your application's admin interface, there will now be a new page with this setting
 
+## active_admin_settings_page DSL
+
+#### Basic usage
+
+```ruby
+ActiveAdmin.register_page 'Settings' do
+  menu label: 'Settings', priority: 99
+  active_admin_settings_page options
+end
+```
+
+#### Options
+Tool                    | Description
+---------------------   | -----------
+:model_name					|String, settings model name override (default: uses name from global config.)
+:starting_with			|String, each key must starting with, (default: nil) 
+:template				|String, custom template rendering (default: 'admin/settings/index')
+:template_object				|object passing to view (default: ActiveadminSettingsCached::Model instance)
+:display    |Hash, display settings override (default: {})
+:title			|String, title value override (default: I18n.t('settings.menu.label'))
+ 
+
 ## Localization
 You can localize settings keys in local file
 
@@ -45,8 +65,7 @@ You can localize settings keys in local file
 en:
   settings:
     attributes:
-      my_awesome_settings:
-        name: 'My Awesome Lolaized Setting'
+      my_awesome_settings: 'My Awesome Lolaized Setting'
 ```
 ## Model name
 
@@ -74,3 +93,11 @@ end
 ```
 
 Available options see [here](https://github.com/justinfrench/formtastic#the-available-inputs)
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

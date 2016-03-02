@@ -1,5 +1,5 @@
 <div>
-  <%= semantic_form_for :settings, :method => :put, url: activeadmin_settings_cached.settings_path do |f| %>
+  <%= semantic_form_for :settings, :method => :post, url: {action: :update} do |f| %>
     <table id="settings" class="index_table index">
       <thead>
         <tr>
@@ -8,12 +8,12 @@
         </tr>
       </thead>
       <tbody>
-        <% ActiveadminSettingsCached.settings.each_pair do |name, value| %>
+        <% settings_model.settings.each_pair do |name, _| %>
           <tr class="odd">
-            <td><strong><%= f.label t("settings.attributes.#{name}.name", default: name) %></strong></td>
+            <td><strong><%= f.label t("settings.attributes.#{name}", default: name) %></strong></td>
             <td>
               <div class='form'>
-                <ol><%= f.input name, settings_field_options(name) %></ol>
+                <ol><%= f.input name, settings_model.field_options(name) %></ol>
               </div>
             </td>
           </tr>
