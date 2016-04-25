@@ -2,6 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/activeadmin_settings_cached.svg)](http://badge.fury.io/rb/activeadmin_settings_cached)
 [![Build Status](https://travis-ci.org/artofhuman/activeadmin_settings_cached.svg?branch=master)](https://travis-ci.org/artofhuman/activeadmin_settings_cached)
+[![Dependency Status](https://gemnasium.com/badges/github.com/artofhuman/activeadmin_settings_cached.svg)](https://gemnasium.com/github.com/artofhuman/activeadmin_settings_cached)
 
 Provides a nice UI interface for [rails-settings-cached](https://github.com/huacnlee/rails-settings-cached) gem in [Active Admin](http://activeadmin.info/).
 
