@@ -11,6 +11,10 @@ module ActiveadminSettingsCached
       assign_attributes(merge_attributes(args))
     end
 
+    # def locale_name(settings_name)
+    #   has_key? ? "#{attributes[:key]}_#{settings_name}" : settings_name
+    # end
+
     def field_options(settings_name)
       default_value = defaults[settings_name]
       value = settings[settings_name]
@@ -37,11 +41,21 @@ module ActiveadminSettingsCached
 
     def settings
       data = load_settings
-      ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }] if data
+      return unless data
+
+      ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
     end
 
+    # TODO: Integrate select by keys, for use with coercions.
+    # def settings
+    #   data = has_key? ? load_settings_by_key : load_settings
+    #   return unless data
+    #
+    #   ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
+    # end
+
     def defaults
-      settings_model.defaults
+      RailsSettings::Default.instance
     end
 
     def display
@@ -68,6 +82,14 @@ module ActiveadminSettingsCached
       settings_model.public_send(meth, attributes[:starting_with])
     end
 
+    def load_settings_by_key
+      settings_model[attributes[:key]]
+    end
+    #
+    # def has_key?
+    #   attributes[:key].present?
+    # end
+
     def assign_attributes(args = {})
       @attributes.merge!(args)
     end
@@ -75,6 +97,7 @@ module ActiveadminSettingsCached
     def default_attributes
       {
         starting_with: nil,
+        # key: nil,
         model_name: ActiveadminSettingsCached.config.model_name,
         display: ActiveadminSettingsCached.config.display
       }
