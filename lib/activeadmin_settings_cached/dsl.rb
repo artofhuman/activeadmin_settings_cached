@@ -12,10 +12,11 @@ module ActiveadminSettingsCached
     # +title+:: title value override (default: I18n.t('settings.menu.label'))
     #
     def active_admin_settings_page(options = {}, &block)
-      options.assert_valid_keys(*Options::VALID_OPTIONS)
+      options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
-      options = Options.options_for(options)
-      coercion = Coercions.new(options[:template_object].defaults, options[:template_object].display)
+      options = ActiveadminSettingsCached::Options.options_for(options)
+      coercion =
+          ActiveadminSettingsCached::Coercions.new(options[:template_object].defaults, options[:template_object].display)
 
       content title: options[:title] do
         render partial: options[:template], locals: { settings_model: options[:template_object] }

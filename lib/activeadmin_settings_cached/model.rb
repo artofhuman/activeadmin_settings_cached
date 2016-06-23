@@ -1,6 +1,6 @@
 module ActiveadminSettingsCached
   class Model
-    include ActiveModel::Model
+    include ::ActiveModel::Model
 
     attr_reader :attributes
 
@@ -43,19 +43,19 @@ module ActiveadminSettingsCached
       data = has_key? ? load_settings_by_key : load_settings
       return unless data
 
-      ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
+      ::ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
     end
 
     def defaults
       settings_model.respond_to?(:defaults) ?
           settings_model.defaults :
-          RailsSettings::Default
+          ::RailsSettings::Default
     end
 
     def defaults_keys
       settings_model.respond_to?(:defaults) ?
           settings_model.defaults.keys :
-          RailsSettings::Default.instance.keys
+          ::RailsSettings::Default.instance.keys
     end
 
     def display
@@ -110,8 +110,8 @@ module ActiveadminSettingsCached
       {
         starting_with: nil,
         key: nil,
-        model_name: ActiveadminSettingsCached.config.model_name,
-        display: ActiveadminSettingsCached.config.display
+        model_name: ::ActiveadminSettingsCached.config.model_name,
+        display: ::ActiveadminSettingsCached.config.display
       }
     end
 

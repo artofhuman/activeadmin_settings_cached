@@ -12,7 +12,7 @@ module ActiveadminSettingsCached
 
     def self.options_for(options = {})
       options[:template_object] =
-          ActiveadminSettingsCached::Model.new(options) unless options[:template_object]
+          ::ActiveadminSettingsCached::Model.new(options) unless options[:template_object]
 
       {
         template: 'admin/settings/index',
