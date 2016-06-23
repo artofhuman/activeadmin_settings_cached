@@ -3,8 +3,8 @@ require 'spec_helper'
 RSpec.describe 'settings', type: :feature, js: true do
   before do
     Setting['some'] = {
-      first_setting: 'CCC',
-      second_setting: false
+      'first_setting' => 'CCC',
+      'second_setting' => false
     }
     Setting['base.first_setting'] = 'AAA'
     Setting['base.second_setting'] = true
@@ -190,7 +190,7 @@ RSpec.describe 'settings', type: :feature, js: true do
   end
 
   def check_some_setting
-    expect(page).to have_selector("input[value='#{Setting['some'][:first_setting]}']")
+    expect(page).to have_selector("input[value='#{Setting['some']['first_setting']}']")
   end
 
   def check_base_setting
@@ -240,8 +240,8 @@ RSpec.describe 'settings', type: :feature, js: true do
   end
 
   def fill_some_setting_check
-    expect(Setting['some'][:second_setting]).to eq valid_some_settings[:second_setting]
-    expect(Setting['some'][:first_setting]).to eq valid_some_settings[:first_setting]
+    expect(Setting['some']['second_setting']).to eq valid_some_settings[:second_setting]
+    expect(Setting['some']['first_setting']).to eq valid_some_settings[:first_setting]
   end
 
   def fill_second_setting_check

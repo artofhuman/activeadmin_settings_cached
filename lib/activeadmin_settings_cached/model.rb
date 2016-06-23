@@ -72,7 +72,7 @@ module ActiveadminSettingsCached
 
     def save(key, value)
       if has_key?
-        settings_model.merge!(attributes[:key], { :"#{key.sub("#{attributes[:key]}.", '')}" => value })
+        settings_model.merge!(attributes[:key], { clean_key(key) => value })
       else
         self[key] = value
       end
@@ -96,6 +96,10 @@ module ActiveadminSettingsCached
 
     def has_key?
       attributes[:key].present?
+    end
+
+    def clean_key(key)
+      key.is_a?(Symbol) ? key : "#{key.sub("#{attributes[:key]}.", '')}"
     end
 
     def assign_attributes(args = {})

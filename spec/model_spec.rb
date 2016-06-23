@@ -10,10 +10,10 @@ RSpec.describe ActiveadminSettingsCached::Model do
   end
 
   before(:all) do
-    Setting['some'] = {
-      'first_setting': 'CCC',
-      'second_setting': true
-    }
+    Setting.merge!('some', {
+      'first_setting' => 'CCC',
+      'second_setting' => true
+    })
   end
 
   let(:all_options) {
@@ -95,7 +95,7 @@ RSpec.describe ActiveadminSettingsCached::Model do
       object = described_class.new(key_options)
       expect(object.field_options('some.first_setting', 'first_setting')).to eq({as: 'string',
                                                                 label: false,
-                                                                input_html: {value: nil, placeholder: 'AAA'}
+                                                                input_html: {value: 'CCC', placeholder: 'AAA'}
                                                                })
     end
 
@@ -143,7 +143,7 @@ RSpec.describe ActiveadminSettingsCached::Model do
     it 'settings by key' do
       object = described_class.new(key_options)
       object.save('some.first_setting', 'LLL')
-      expect(Setting['some'][:first_setting]).to eq('LLL')
+      expect(Setting['some']['first_setting']).to eq('LLL')
     end
   end
 
