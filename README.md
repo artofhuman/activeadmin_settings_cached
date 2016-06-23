@@ -53,6 +53,7 @@ Tool                    | Description
 ---------------------   | -----------
 :model_name					|String, settings model name override (default: uses name from global config.)
 :starting_with			|String, each key must starting with, (default: nil)
+:key			|String, Symbol root key, can be replacement for starting_with, (default: nil)
 :template				|String, custom template rendering (default: 'admin/settings/index')
 :template_object				|object passing to view (default: ActiveadminSettingsCached::Model instance)
 :display    |Hash, display settings override (default: {})

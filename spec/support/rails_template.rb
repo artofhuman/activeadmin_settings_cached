@@ -25,6 +25,7 @@ inject_into_file 'config/app.yml', <<-YAML, after: "defaults: &defaults\n"
   'base.third_setting': 5
   'base.four_setting': 5.50
   'base.five_setting': :aaa
+  'base.six_setting': ['a', 'b']
   'second.first_setting': false
   'second.second_setting': BBB
 YAML

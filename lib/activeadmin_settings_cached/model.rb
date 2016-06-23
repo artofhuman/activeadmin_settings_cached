@@ -11,13 +11,13 @@ module ActiveadminSettingsCached
       assign_attributes(merge_attributes(args))
     end
 
-    # def locale_name(settings_name)
-    #   has_key? ? "#{attributes[:key]}_#{settings_name}" : settings_name
-    # end
+    def field_name(settings_name)
+      has_key? ? "#{attributes[:key]}.#{settings_name}" : settings_name
+    end
 
-    def field_options(settings_name)
+    def field_options(settings_name, key_name)
       default_value = defaults[settings_name]
-      value = settings[settings_name]
+      value = settings[key_name]
 
       input_opts = if default_value.is_a?(Array)
                      {
@@ -40,22 +40,22 @@ module ActiveadminSettingsCached
     end
 
     def settings
-      data = load_settings
+      data = has_key? ? load_settings_by_key : load_settings
       return unless data
 
       ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
     end
 
-    # TODO: Integrate select by keys, for use with coercions.
-    # def settings
-    #   data = has_key? ? load_settings_by_key : load_settings
-    #   return unless data
-    #
-    #   ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
-    # end
-
     def defaults
-      RailsSettings::Default.instance
+      settings_model.respond_to?(:defaults) ?
+          settings_model.defaults :
+          RailsSettings::Default
+    end
+
+    def defaults_keys
+      settings_model.respond_to?(:defaults) ?
+          settings_model.defaults.keys :
+          RailsSettings::Default.instance.keys
     end
 
     def display
@@ -68,6 +68,14 @@ module ActiveadminSettingsCached
 
     def []=(param, value)
       settings_model[param] = value
+    end
+
+    def save(key, value)
+      if has_key?
+        settings_model.merge!(attributes[:key], { :"#{key.sub("#{attributes[:key]}.", '')}" => value })
+      else
+        self[key] = value
+      end
     end
 
     def persisted?
@@ -83,12 +91,12 @@ module ActiveadminSettingsCached
     end
 
     def load_settings_by_key
-      settings_model[attributes[:key]]
+      self[attributes[:key]]
     end
-    #
-    # def has_key?
-    #   attributes[:key].present?
-    # end
+
+    def has_key?
+      attributes[:key].present?
+    end
 
     def assign_attributes(args = {})
       @attributes.merge!(args)
@@ -97,7 +105,7 @@ module ActiveadminSettingsCached
     def default_attributes
       {
         starting_with: nil,
-        # key: nil,
+        key: nil,
         model_name: ActiveadminSettingsCached.config.model_name,
         display: ActiveadminSettingsCached.config.display
       }

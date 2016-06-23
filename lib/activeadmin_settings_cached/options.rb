@@ -6,7 +6,7 @@ module ActiveadminSettingsCached
       :template,
       :template_object,
       :display,
-      # :key,
+      :key,
       :title
     ].freeze
 

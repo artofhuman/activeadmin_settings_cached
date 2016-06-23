@@ -2,7 +2,10 @@ require 'spec_helper'
 
 RSpec.describe 'settings', type: :feature, js: true do
   before do
-    Setting['some'] = {first_setting: 'CCC', second_setting: false}
+    Setting['some'] = {
+      first_setting: 'CCC',
+      second_setting: false
+    }
     Setting['base.first_setting'] = 'AAA'
     Setting['base.second_setting'] = true
     Setting['second.first_setting'] = false
@@ -34,6 +37,7 @@ RSpec.describe 'settings', type: :feature, js: true do
       ActiveadminSettingsCached.configure do |config|
         config.display = {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
                           'base.third_setting' => 'number', 'base.four_setting' => 'number',
+                          'base.five_setting' => 'string',
                           'second.first_setting' => 'boolean', 'second.second_setting' => 'string',
                           'some.first_setting' => 'string', 'some.second_setting' => 'boolean'}
       end
@@ -72,6 +76,7 @@ RSpec.describe 'settings', type: :feature, js: true do
       before do
         template_object = ActiveadminSettingsCached::Model.new(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
                                                                          'base.third_setting' => 'number', 'base.four_setting' => 'number',
+                                                                         'base.five_setting' => 'string',
                                                                          'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
         add_all_setting_resource(template_object: template_object)
       end
@@ -101,11 +106,13 @@ RSpec.describe 'settings', type: :feature, js: true do
         config.display = {}
       end
       add_setting_resource(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
-                                     'base.third_setting' => 'number', 'base.four_setting' => 'number'})
+                                     'base.third_setting' => 'number', 'base.four_setting' => 'number',
+                                     'base.five_setting' => 'string'})
       add_second_setting_resource(display: {'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
-      # add_some_setting_resource(display: {'some.first_setting' => 'string', 'some.second_setting' => 'boolean'})
+      add_some_setting_resource(display: {'some.first_setting' => 'string', 'some.second_setting' => 'boolean'})
       add_all_setting_resource(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
                                          'base.third_setting' => 'number', 'base.four_setting' => 'number',
+                                         'base.five_setting' => 'string',
                                          'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
     end
 
@@ -139,20 +146,20 @@ RSpec.describe 'settings', type: :feature, js: true do
       end
     end
 
-    # context 'some setting index' do
-    #   it 'when list' do
-    #     visit '/admin/some_settings'
-    #     check_some_setting
-    #   end
-    #
-    #   it 'when save' do
-    #     visit '/admin/some_settings'
-    #     check_some_setting
-    #     fill_some_setting
-    #     submit
-    #     fill_some_setting_check
-    #   end
-    # end
+    context 'some setting index' do
+      it 'when list' do
+        visit '/admin/some_settings'
+        check_some_setting
+      end
+
+      it 'when save' do
+        visit '/admin/some_settings'
+        check_some_setting
+        fill_some_setting
+        submit
+        fill_some_setting_check
+      end
+    end
 
     context 'all setting index' do
       it 'when list' do
@@ -179,12 +186,12 @@ RSpec.describe 'settings', type: :feature, js: true do
   end
 
   def check_some_setting_plain
-    expect(page).to have_selector("input[value='#{Setting.some.with_indifferent_access}']")
+    expect(page).to have_selector("input[value='#{Setting['some'].with_indifferent_access}']")
   end
 
-  # def check_some_setting
-  #   expect(page).to have_selector("input[value='#{Setting['some.first_setting']}']")
-  # end
+  def check_some_setting
+    expect(page).to have_selector("input[value='#{Setting['some'][:first_setting]}']")
+  end
 
   def check_base_setting
     expect(page).to have_selector("input[value='#{Setting['base.first_setting']}']")
@@ -210,10 +217,10 @@ RSpec.describe 'settings', type: :feature, js: true do
     fill_in('settings_some', with: valid_some_settings)
   end
 
-  # def fill_some_setting
-  #   fill_in('settings_first_setting', with: valid_some_settings[:first_setting])
-  #   check('settings.second_setting')
-  # end
+  def fill_some_setting
+    fill_in('settings_some.first_setting', with: valid_some_settings[:first_setting])
+    check('settings_some.second_setting')
+  end
 
   def fill_second_setting
     fill_in('settings_second.second_setting', with: valid_second_settings[:second_setting])
@@ -232,10 +239,10 @@ RSpec.describe 'settings', type: :feature, js: true do
     expect(Setting.some.with_indifferent_access).to eq(initial_some_settings)
   end
 
-  # def fill_some_setting_check
-  #   expect(Setting['some.second_setting']).to eq valid_some_settings[:second_setting]
-  #   expect(Setting['some.first_setting']).to eq valid_some_settings[:first_setting]
-  # end
+  def fill_some_setting_check
+    expect(Setting['some'][:second_setting]).to eq valid_some_settings[:second_setting]
+    expect(Setting['some'][:first_setting]).to eq valid_some_settings[:first_setting]
+  end
 
   def fill_second_setting_check
     expect(Setting['second.second_setting']).to eq valid_second_settings[:second_setting]

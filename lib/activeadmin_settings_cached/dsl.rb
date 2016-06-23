@@ -5,6 +5,7 @@ module ActiveadminSettingsCached
     # Options:
     # +model_name+:: settings model name override (default: uses name from global config.)
     # +starting_with+:: each key must starting with, (default: nil)
+    # +key+:: root key, can be replacement for starting_with, (default: nil)
     # +template+:: custom template rendering (default: 'admin/settings/index')
     # +template_object+:: object to use in templates (default: ActiveadminSettingsCached::Model instance)
     # +display+:: display settings override (default: nil)
@@ -21,10 +22,10 @@ module ActiveadminSettingsCached
       end
 
       page_action :update, method: :post do
-        settings_params = params.require(:settings).permit(options[:template_object].defaults.keys)
+        settings_params = params.require(:settings).permit(options[:template_object].display.keys)
 
         coercion.cast_params(settings_params) do |name, value|
-          options[:template_object][name] = value
+          options[:template_object].save(name, value)
         end
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)

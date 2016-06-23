@@ -6,12 +6,13 @@ RSpec.describe ActiveadminSettingsCached::Coercions do
                    'second.first_setting' => 'boolean', 'second.second_setting' => 'string'].with_indifferent_access }
   let(:defaults) { Hash['base.first_setting' => 'AAA', 'base.second_setting' => true, 'base.third_setting' => 5,
                         'base.four_setting' => 5.5, 'base.five_setting' => :aaa, 'second.first_setting' => false,
-                        'second.second_setting' => 'BBB'].with_indifferent_access }
+                        'second.second_setting' => 'BBB', 'some' => Hash.new ].with_indifferent_access }
   let(:right_params) { ActionController::Parameters.new(Hash['base.first_setting' => 'BBB', 'base.second_setting' => 'false', 'base.third_setting' => '155',
                       'base.four_setting' => '55.5', 'base.five_setting' => 'bbb', 'second.first_setting' => 'true',
                       'second.second_setting' => 'AAA']) }
   let(:wrong_params) { ActionController::Parameters.new(Hash['base.second_setting' => 'hjgj', 'base.third_setting' => 'fhfh',
-                      'base.four_setting' => 'gjfhg', 'second.first_setting' => 'ggf']) }
+                      'base.four_setting' => 'gjfhg', 'second.first_setting' => 'ggf',
+                                                        'some' => Hash.new]) }
   let(:no_params) { ActionController::Parameters.new(Hash[]) }
 
   before do
