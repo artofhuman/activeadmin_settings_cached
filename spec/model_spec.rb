@@ -16,27 +16,27 @@ RSpec.describe ActiveadminSettingsCached::Model do
     })
   end
 
-  let(:all_options) {
+  let(:all_options) do
     {
       model_name: 'Setting',
       starting_with: 'base.',
       key: nil,
       display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean'}
     }
-  }
+  end
 
-  let(:key_options) {
+  let(:key_options) do
     {
       model_name: 'Setting',
       starting_with: nil,
       key: 'some',
       display: {'some.first_setting' => 'string', 'base.second_setting' => 'boolean'}
     }
-  }
+  end
 
-  let(:no_options) {
+  let(:no_options) do
     {}
-  }
+  end
 
   context '#attributes' do
     it 'set options' do

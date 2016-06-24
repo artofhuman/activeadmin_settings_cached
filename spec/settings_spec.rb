@@ -12,25 +12,25 @@ RSpec.describe 'settings', type: :feature, js: true do
     Setting['second.second_setting'] = 'BBB'
   end
 
-  let(:valid_base_settings) {
+  let(:valid_base_settings) do
     { first_setting: 'BBB',
      second_setting: false,
      third_setting: 100,
      four_setting: 150.55,
      five_setting: 'bbb' }.with_indifferent_access
-  }
+  end
 
-  let(:valid_second_settings) {
+  let(:valid_second_settings) do
     {second_setting: 'AAA', first_setting: true}.with_indifferent_access
-  }
+  end
 
-  let(:initial_some_settings) {
+  let(:initial_some_settings) do
     {first_setting: 'CCC', second_setting: false}.with_indifferent_access
-  }
+  end
 
-  let(:valid_some_settings) {
+  let(:valid_some_settings) do
     {first_setting: 'EEE', second_setting: true}.with_indifferent_access
-  }
+  end
 
   context 'global config' do
     before do
@@ -43,7 +43,7 @@ RSpec.describe 'settings', type: :feature, js: true do
       end
       add_setting_resource
       add_second_setting_resource
-      # add_some_setting_resource
+      add_some_setting_resource
       add_all_setting_resource
     end
 
