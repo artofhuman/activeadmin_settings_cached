@@ -1,6 +1,6 @@
 module ActiveadminSettingsCached
   class Model
-    include ActiveModel::Model
+    include ::ActiveModel::Model
 
     attr_reader :attributes
 
@@ -11,9 +11,13 @@ module ActiveadminSettingsCached
       assign_attributes(merge_attributes(args))
     end
 
-    def field_options(settings_name)
+    def field_name(settings_name)
+      has_key? ? "#{attributes[:key]}.#{settings_name}" : settings_name
+    end
+
+    def field_options(settings_name, key_name)
       default_value = defaults[settings_name]
-      value = settings[settings_name]
+      value = settings[key_name]
 
       input_opts = if default_value.is_a?(Array)
                      {
@@ -36,12 +40,22 @@ module ActiveadminSettingsCached
     end
 
     def settings
-      data = load_settings
-      ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }] if data
+      data = has_key? ? load_settings_by_key : load_settings
+      return unless data
+
+      ::ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
     end
 
     def defaults
-      settings_model.defaults
+      settings_model.respond_to?(:defaults) ?
+          settings_model.defaults :
+          ::RailsSettings::Default
+    end
+
+    def defaults_keys
+      settings_model.respond_to?(:defaults) ?
+          settings_model.defaults.keys :
+          ::RailsSettings::Default.instance.keys
     end
 
     def display
@@ -56,6 +70,14 @@ module ActiveadminSettingsCached
       settings_model[param] = value
     end
 
+    def save(key, value)
+      if has_key?
+        settings_model.merge!(attributes[:key], { clean_key(key) => value })
+      else
+        self[key] = value
+      end
+    end
+
     def persisted?
       false
     end
@@ -68,6 +90,18 @@ module ActiveadminSettingsCached
       settings_model.public_send(meth, attributes[:starting_with])
     end
 
+    def load_settings_by_key
+      self[attributes[:key]]
+    end
+
+    def has_key?
+      attributes[:key].present?
+    end
+
+    def clean_key(key)
+      key.is_a?(Symbol) ? key : "#{key.sub("#{attributes[:key]}.", '')}"
+    end
+
     def assign_attributes(args = {})
       @attributes.merge!(args)
     end
@@ -75,8 +109,9 @@ module ActiveadminSettingsCached
     def default_attributes
       {
         starting_with: nil,
-        model_name: ActiveadminSettingsCached.config.model_name,
-        display: ActiveadminSettingsCached.config.display
+        key: nil,
+        model_name: ::ActiveadminSettingsCached.config.model_name,
+        display: ::ActiveadminSettingsCached.config.display
       }
     end
 

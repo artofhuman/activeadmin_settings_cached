@@ -6,11 +6,13 @@ module ActiveadminSettingsCached
       :template,
       :template_object,
       :display,
+      :key,
       :title
     ].freeze
 
     def self.options_for(options = {})
-      options[:template_object] = ActiveadminSettingsCached::Model.new(options) unless options[:template_object]
+      options[:template_object] =
+          ::ActiveadminSettingsCached::Model.new(options) unless options[:template_object]
 
       {
         template: 'admin/settings/index',

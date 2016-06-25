@@ -22,7 +22,7 @@ module ActiveadminSettingsCached
       return coerced_params unless block_given?
 
       coerced_params.each do |name, value|
-        yield(name, value.call)
+        yield(name, value.call) unless value.nil?
       end
     end
 
@@ -50,6 +50,8 @@ module ActiveadminSettingsCached
         -> { string_to_integer(value) }
       when Float
         -> { string_to_float(value) }
+      when Hash, 'ActiveSupport::HashWithIndifferentAccess'
+        nil
       when Symbol
         -> { string_to_symbol(value) }
       else
