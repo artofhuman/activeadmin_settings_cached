@@ -1,16 +1,17 @@
 module ActiveadminSettingsCached
   module DSL
-    # Declares settings function
+    # Declares settings function.
     #
-    # Options:
-    # +model_name+:: settings model name override (default: uses name from global config.)
-    # +starting_with+:: each key must starting with, (default: nil)
-    # +key+:: root key, can be replacement for starting_with, (default: nil)
-    # +template+:: custom template rendering (default: 'admin/settings/index')
-    # +template_object+:: object to use in templates (default: ActiveadminSettingsCached::Model instance)
-    # +display+:: display settings override (default: nil)
-    # +title+:: title value override (default: I18n.t('settings.menu.label'))
+    # @api public
     #
+    # @param [Hash] options
+    # @option options [String] :model_name, settings model name override (default: uses name from global config.)
+    # @option options [String] :starting_with, each key must starting with, (default: nil)
+    # @option options [String] :key, root key can be replacement for starting_with, (default: nil)
+    # @option options [String] :tempalte custom, template rendering (default: 'admin/settings/index')
+    # @option options [String] :template_object, object to use in templates (default: ActiveadminSettingsCached::Model instance)
+    # @option options [String] :display, display settings override (default: nil)
+    # @option options [String] :title, title value override (default: I18n.t('settings.menu.label'))
     def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
