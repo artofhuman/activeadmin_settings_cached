@@ -15,3 +15,4 @@
 .ruby-version
 .idea
 mkmf.log
+/gemfiles
