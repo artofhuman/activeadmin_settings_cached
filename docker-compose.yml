@@ -1,22 +1,12 @@
 version: '2'
 
 services:
-  phantomjs:
-    image: cmfatih/phantomjs
-    ports:
-      - 8910
-    entrypoint: phantomjs
-    command: "--webdriver=8910"
-
   app:
     build: '.'
     command: 'make test'
     volumes:
       - '.:/app'
       - gems:/usr/local/bundle
-    links:
-      - phantomjs:phantomjs
-    working_dir: '/app'
 
 volumes:
   gems:
