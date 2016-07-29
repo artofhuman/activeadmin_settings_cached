@@ -4,7 +4,7 @@ BUNDLE = bundle _${BUNDLE_VERSION}_
 default: test
 
 test: appraisals
-	${BUNDLE} exec appraisal rspec spec
+	${BUNDLE} exec appraisal rspec ${T}
 
 appraisals: setup
 	${BUNDLE} exec appraisal install
@@ -14,6 +14,6 @@ setup:
 	${BUNDLE} check || ${BUNDLE} install -j 2
 
 clean:
-	rm Gemfile.lock
+	rm -f Gemfile.lock
 	rm -rf spec/rails
 	rm -rf gemfiles

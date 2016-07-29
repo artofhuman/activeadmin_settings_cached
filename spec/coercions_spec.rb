@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe ActiveadminSettingsCached::Coercions do
   let(:display) { Hash['base.first_setting' => 'string', 'base.second_setting' => 'boolean',
                    'base.third_setting' => 'number', 'base.four_setting' => 'number',

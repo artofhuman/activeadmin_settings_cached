@@ -4,7 +4,7 @@ generate :settings, 'Setting'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-generate :'active_admin:install --skip-users'
+generate :'active_admin:install --skip --skip-users'
 generate :'formtastic:install'
 generate :'settings:install'
 

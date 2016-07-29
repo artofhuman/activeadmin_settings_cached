@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'settings', type: :feature, js: true do
   before do
     Setting['some'] = {
@@ -12,35 +10,78 @@ RSpec.describe 'settings', type: :feature, js: true do
     Setting['second.second_setting'] = 'BBB'
   end
 
-  let(:valid_base_settings) do
-    { first_setting: 'BBB',
-     second_setting: false,
-     third_setting: 100,
-     four_setting: 150.55,
-     five_setting: 'bbb' }.with_indifferent_access
-  end
-
-  let(:valid_second_settings) do
-    {second_setting: 'AAA', first_setting: true}.with_indifferent_access
-  end
-
   let(:initial_some_settings) do
-    {first_setting: 'CCC', second_setting: false}.with_indifferent_access
+    {
+      first_setting: 'CCC',
+      second_setting: false
+    }.with_indifferent_access
   end
 
-  let(:valid_some_settings) do
-    {first_setting: 'EEE', second_setting: true}.with_indifferent_access
+  shared_examples_for 'render input with value' do |input_value|
+    it 'has input with value' do
+      expect(page).to have_selector("input[value='#{input_value}']")
+    end
+  end
+
+  shared_examples_for 'fill and save base settings to db' do
+    it 'saves base settings to db' do
+      fill_in('settings_base.first_setting', with: 'First')
+      uncheck('settings_base.second_setting')
+      fill_in('settings_base.third_setting', with: '100')
+      fill_in('settings_base.four_setting', with: '50.5')
+      fill_in('settings_base.five_setting', with: 'five')
+
+      submit
+
+      expect(Setting['base.first_setting']).to eq 'First'
+      expect(Setting['base.second_setting']).to eq false
+      expect(Setting['base.third_setting']).to eq 100
+      expect(Setting['base.four_setting']).to eq 50.5
+      expect(Setting['base.five_setting']).to eq :five
+    end
+  end
+
+  shared_examples_for 'fill and save second settings to db' do
+    it 'saves settings to db' do
+      fill_in('settings_second.second_setting', with: 'Awesome second')
+      check('settings_second.first_setting')
+
+      submit
+
+      expect(Setting['second.second_setting']).to eq 'Awesome second'
+      expect(Setting['second.first_setting']).to eq true
+      expect(Setting.some.with_indifferent_access).to eq(initial_some_settings)
+    end
+  end
+
+  shared_examples_for 'fill and save some settings to db' do
+    it 'save some settings to db' do
+      fill_in('settings_some.first_setting', with: 'Awesome value')
+      check('settings_some.second_setting')
+
+      submit
+
+      expect(Setting['some']['first_setting']).to eq 'Awesome value'
+      expect(Setting['some']['second_setting']).to eq true
+    end
   end
 
   context 'global config' do
     before do
       ActiveadminSettingsCached.configure do |config|
-        config.display = {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
-                          'base.third_setting' => 'number', 'base.four_setting' => 'number',
-                          'base.five_setting' => 'string',
-                          'second.first_setting' => 'boolean', 'second.second_setting' => 'string',
-                          'some.first_setting' => 'string', 'some.second_setting' => 'boolean'}
+        config.display = {
+          'base.first_setting'    => 'string',
+          'base.second_setting'   => 'boolean',
+          'base.third_setting'    => 'number',
+          'base.four_setting'     => 'number',
+          'base.five_setting'     => 'string',
+          'second.first_setting'  => 'boolean',
+          'second.second_setting' => 'string',
+          'some.first_setting'    => 'string',
+          'some.second_setting'   => 'boolean'
+        }
       end
+
       add_setting_resource
       add_second_setting_resource
       add_some_setting_resource
@@ -48,205 +89,128 @@ RSpec.describe 'settings', type: :feature, js: true do
     end
 
     context 'all setting index' do
-      it 'when list' do
-        visit '/admin/settings'
-        check_base_setting
-        check_second_setting
-        check_some_setting_plain
-      end
+      before { visit '/admin/settings' }
 
-      it 'when save' do
-        visit '/admin/settings'
-        check_base_setting
-        check_second_setting
-        check_some_setting_plain
-        fill_base_setting
-        fill_second_setting
-        fill_some_setting_plain
-        submit
-        fill_base_setting_check
-        fill_second_setting_check
-        fill_some_setting_check_plain
-      end
+      it_behaves_like 'render input with value', 'AAA'
+      it_behaves_like 'render input with value', 'BBB'
+
+      # TODO: fixme
+      # it_behaves_like 'render input with value', Setting['some'].with_indifferent_access
+      it_behaves_like 'fill and save base settings to db'
+      it_behaves_like 'fill and save second settings to db'
     end
   end
 
   context 'with custom template_object' do
     context 'when right object' do
       before do
-        template_object = ActiveadminSettingsCached::Model.new(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
-                                                                         'base.third_setting' => 'number', 'base.four_setting' => 'number',
-                                                                         'base.five_setting' => 'string',
-                                                                         'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
-        add_all_setting_resource(template_object: template_object)
+        display_settings = {
+          'base.first_setting'    => 'string',
+          'base.second_setting'   => 'boolean',
+          'base.third_setting'    => 'number',
+          'base.four_setting'     => 'number',
+          'base.five_setting'     => 'string',
+          'second.first_setting'  => 'boolean',
+          'second.second_setting' => 'string'
+        }
+
+        add_all_setting_resource(
+          template_object: ActiveadminSettingsCached::Model.new(display: display_settings)
+        )
+
+        visit '/admin/base_settings'
       end
 
-      it do
-        visit '/admin/base_settings'
-        check_base_setting
-      end
+      it_behaves_like 'render input with value', 'AAA'
     end
 
     context 'when wrong object' do
       before do
-        template_object = nil
-        add_all_setting_resource(template_object: template_object)
+        add_all_setting_resource(template_object: nil)
+
+        visit '/admin/base_settings'
       end
 
-      it do
-        visit '/admin/base_settings'
-        check_base_setting
-      end
+      it_behaves_like 'render input with value', 'AAA'
     end
   end
 
-  context 'per page' do
+  context 'when settings on different pages' do
     before do
       ActiveadminSettingsCached.configure do |config|
         config.display = {}
       end
-      add_setting_resource(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
-                                     'base.third_setting' => 'number', 'base.four_setting' => 'number',
-                                     'base.five_setting' => 'string'})
-      add_second_setting_resource(display: {'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
-      add_some_setting_resource(display: {'some.first_setting' => 'string', 'some.second_setting' => 'boolean'})
-      add_all_setting_resource(display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean',
-                                         'base.third_setting' => 'number', 'base.four_setting' => 'number',
-                                         'base.five_setting' => 'string',
-                                         'second.first_setting' => 'boolean', 'second.second_setting' => 'string'})
+
+      add_setting_resource(
+        display: {
+          'base.first_setting'  => 'string',
+          'base.second_setting' => 'boolean',
+          'base.third_setting'  => 'number',
+          'base.four_setting'   => 'number',
+          'base.five_setting'   => 'string'
+        }
+      )
+
+      add_second_setting_resource(
+        display: {
+          'second.first_setting'  => 'boolean',
+          'second.second_setting' => 'string'
+        }
+      )
+
+      add_some_setting_resource(
+        display: {
+          'some.first_setting'  => 'string',
+          'some.second_setting' => 'boolean'
+        }
+      )
+
+      add_all_setting_resource(
+        display: {
+          'base.first_setting'    => 'string',
+          'base.second_setting'   => 'boolean',
+          'base.third_setting'    => 'number',
+          'base.four_setting'     => 'number',
+          'base.five_setting'     => 'string',
+          'second.first_setting'  => 'boolean',
+          'second.second_setting' => 'string'
+        }
+      )
     end
 
-    context 'setting index' do
-      it 'when list' do
-        visit '/admin/base_settings'
-        check_base_setting
-      end
+    context 'base settings page' do
+      before { visit '/admin/base_settings' }
 
-      it 'when save' do
-        visit '/admin/base_settings'
-        check_base_setting
-        fill_base_setting
-        submit
-        fill_base_setting_check
-      end
+      it_behaves_like 'render input with value', 'AAA'
+      it_behaves_like 'fill and save base settings to db'
     end
 
-    context 'second setting index' do
-      it 'when list' do
-        visit '/admin/second_settings'
-        check_second_setting
-      end
+    context 'second setting page' do
+      before { visit '/admin/second_settings' }
 
-      it 'when save' do
-        visit '/admin/second_settings'
-        check_second_setting
-        fill_second_setting
-        submit
-        fill_second_setting_check
-      end
+      it_behaves_like 'render input with value', 'BBB'
+      it_behaves_like 'fill and save second settings to db'
     end
 
     context 'some setting index' do
-      it 'when list' do
-        visit '/admin/some_settings'
-        check_some_setting
-      end
+      before { visit '/admin/some_settings' }
 
-      it 'when save' do
-        visit '/admin/some_settings'
-        check_some_setting
-        fill_some_setting
-        submit
-        fill_some_setting_check
-      end
+      it_behaves_like 'render input with value', 'CCC'
+      it_behaves_like 'fill and save some settings to db'
     end
 
     context 'all setting index' do
-      it 'when list' do
-        visit '/admin/settings'
-        check_base_setting
-        check_second_setting
-        check_some_setting_plain
-      end
+      before { visit '/admin/settings' }
 
-      it 'when save' do
-        visit '/admin/settings'
-        check_base_setting
-        check_second_setting
-        check_some_setting_plain
-        fill_base_setting
-        fill_second_setting
-        fill_some_setting_plain
-        submit
-        fill_base_setting_check
-        fill_second_setting_check
-        fill_some_setting_check_plain
-      end
+      it_behaves_like 'render input with value', 'AAA'
+      it_behaves_like 'render input with value', 'BBB'
+      # FIXME
+      #it_behaves_like 'render input with value', Setting['some'].with_indifferent_access
+
+      it_behaves_like 'fill and save base settings to db'
+      it_behaves_like 'fill and save second settings to db'
+      it { expect(Setting.some.with_indifferent_access).to eq(initial_some_settings) }
     end
-  end
-
-  def check_some_setting_plain
-    expect(page).to have_selector("input[value='#{Setting['some'].with_indifferent_access}']")
-  end
-
-  def check_some_setting
-    expect(page).to have_selector("input[value='#{Setting['some']['first_setting']}']")
-  end
-
-  def check_base_setting
-    expect(page).to have_selector("input[value='#{Setting['base.first_setting']}']")
-  end
-
-  def check_second_setting
-    expect(page).to have_selector("input[value='#{Setting['second.second_setting']}']")
-  end
-
-  def fill_base_setting_plain
-    fill_in('settings_base', with: valid_base_settings)
-  end
-
-  def fill_base_setting
-    fill_in('settings_base.first_setting', with: valid_base_settings[:first_setting])
-    uncheck('settings_base.second_setting')
-    fill_in('settings_base.third_setting', with: valid_base_settings[:third_setting])
-    fill_in('settings_base.four_setting', with: valid_base_settings[:four_setting])
-    fill_in('settings_base.five_setting', with: valid_base_settings[:five_setting])
-  end
-
-  def fill_some_setting_plain
-    fill_in('settings_some', with: valid_some_settings)
-  end
-
-  def fill_some_setting
-    fill_in('settings_some.first_setting', with: valid_some_settings[:first_setting])
-    check('settings_some.second_setting')
-  end
-
-  def fill_second_setting
-    fill_in('settings_second.second_setting', with: valid_second_settings[:second_setting])
-    check('settings_second.first_setting')
-  end
-
-  def fill_base_setting_check
-    expect(Setting['base.first_setting']).to eq valid_base_settings[:first_setting]
-    expect(Setting['base.second_setting']).to eq valid_base_settings[:second_setting]
-    expect(Setting['base.third_setting']).to eq valid_base_settings[:third_setting]
-    expect(Setting['base.four_setting']).to eq valid_base_settings[:four_setting]
-    expect(Setting['base.five_setting']).to eq valid_base_settings[:five_setting].to_sym
-  end
-
-  def fill_some_setting_check_plain
-    expect(Setting.some.with_indifferent_access).to eq(initial_some_settings)
-  end
-
-  def fill_some_setting_check
-    expect(Setting['some']['second_setting']).to eq valid_some_settings[:second_setting]
-    expect(Setting['some']['first_setting']).to eq valid_some_settings[:first_setting]
-  end
-
-  def fill_second_setting_check
-    expect(Setting['second.second_setting']).to eq valid_second_settings[:second_setting]
-    expect(Setting['second.first_setting']).to eq valid_second_settings[:first_setting]
   end
 
   def submit

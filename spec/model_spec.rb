@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe ActiveadminSettingsCached::Model do
   include ActiveModel::Lint::Tests
 
