@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'activeadmin'
   s.add_dependency 'rails-settings-cached', '>= 0.5.3', '< 0.6.6'
+  s.add_dependency 'dry-types', '>= 0.8.1'
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"

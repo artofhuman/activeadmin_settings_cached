@@ -1,17 +1,15 @@
+require 'dry-types'
+
 module ActiveadminSettingsCached
+  # Coerce user input values to defined types
+  #
+  # @api private
   class Coercions
-    SIMPLE_COERCIONS = {
-      float: :to_f,
-      integer: :to_i,
-      symbol: :to_sym
-    }
     attr_reader :defaults, :display
 
     def initialize(defaults, display)
       @defaults = defaults
       @display = display
-
-      init_methods
     end
 
     def cast_params(params)
@@ -28,34 +26,29 @@ module ActiveadminSettingsCached
 
     private
 
-    def coerce(m, &block)
-      define_singleton_method :"string_to_#{m.to_s}", &block
-    end
-
-    def init_methods
-      coerce :boolean do |value|
-        value && %w(true 1 yes y t).include?(value)
-      end
-
-      SIMPLE_COERCIONS.each do |k, v|
-        coerce(k) { |value| String(value).send(v) }
-      end
-    end
-
     def cast_value(name, value)
       case defaults[name]
       when TrueClass, FalseClass
-        display[name].to_s == 'boolean' ? -> { string_to_boolean(value) } : -> { value }
+        -> { value_or_default('bool', value, false) }
       when Integer
-        -> { string_to_integer(value) }
+        -> { value_or_default('int', value, 0) }
       when Float
-        -> { string_to_float(value) }
+        -> { value_or_default('float', value, 0.0) }
       when Hash, 'ActiveSupport::HashWithIndifferentAccess'
         nil
       when Symbol
-        -> { string_to_symbol(value) }
+        -> { value.to_sym }
       else
         -> { value }
+      end
+    end
+
+    def value_or_default(type, value, default)
+      result = Dry::Types["form.#{type}"].call(value)
+      if Dry::Types[type].valid?(result)
+        result
+      else
+        default
       end
     end
   end
