@@ -1,0 +1,16 @@
+de:
+  activeadmin_settings_cached:
+    settings:
+      update:
+        success: Konfiguration wurde gespeichert.
+
+  activerecord:
+    models:
+      settings: 'Konfiguration'
+
+  settings:
+    menu:
+      label: 'Konfiguration'
+    index:
+      name: 'Name'
+      value: 'Wert'
