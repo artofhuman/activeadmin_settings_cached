@@ -20,7 +20,7 @@ And then execute:
 
 Create your settings model:
 
-    $ rails g settings Settings
+    $ rails g settings:install
     $ bundle exec rake db:migrate
 
 Create your settings page:
