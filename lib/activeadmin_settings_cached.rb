@@ -5,7 +5,7 @@ module ActiveadminSettingsCached
     attr_accessor :model_name, :display
 
     def model_name
-      (@model_name ||= 'Settings').constantize
+      (@model_name ||= 'Setting').constantize
     end
 
     def display
