@@ -25,7 +25,17 @@ Create your settings model:
 
 Create your settings page:
 
-    $ rails g active_admin:settings Settings    
+``` ruby
+# app/admin/setting.rb
+ActiveAdmin.register_page 'Setting' do
+  title = 'Settings'
+  menu label: title
+
+  active_admin_settings_page(
+    title: title
+  )
+end
+```
 
 And configure your default values in your Settings model:
 
