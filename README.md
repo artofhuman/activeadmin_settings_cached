@@ -81,7 +81,7 @@ en:
 ```
 ## Model name
 
-By default the name of the mode is `Settings`. If you want to use a different name for the model, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
+By default the name of the mode is `Setting`. If you want to use a different name for the model, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
 
 ``` ruby
 ActiveadminSettingsCached.configure do |config|
