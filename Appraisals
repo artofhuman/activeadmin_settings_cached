@@ -7,11 +7,3 @@ appraise "rails5.0" do
   gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources.git'
   gem 'listen'
 end
-
-#appraise "rails5.0" do
-  #gem "rails", "~> 5.0.0"
-  #gem 'inherited_resources', github: 'activeadmin/inherited_resources'
-  #gem 'ransack',             github: 'activerecord-hackery/ransack'
-  #gem 'draper',              '> 3.x'
-  #gem 'sass-rails',          github: 'rails/sass-rails' # For Sprockets 4
-#end

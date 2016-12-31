@@ -5,12 +5,6 @@ gemfile:
   - gemfiles/rails4.2.gemfile
   - gemfiles/rails5.0.gemfile
 
-#matrix:
-#  fast_finish: true
-#  allow_failures:
-#    - gemfile: gemfiles/rails4.2.gemfile
-#      rvm: 2.4.0
-
 before_script:
   - bundle exec rake setup
 
@@ -18,7 +12,4 @@ script:
   - bundle exec rake
 
 rvm:
-  #- 2.1.5
-  #- 2.2.0
   - 2.3.0
-#  - 2.4.0
