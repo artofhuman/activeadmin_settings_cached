@@ -1,5 +1,8 @@
 default: test
 
+rake:
+	bundle exec rake ${T}
+
 test: appraisals
 	bundle exec appraisal rspec ${T}
 

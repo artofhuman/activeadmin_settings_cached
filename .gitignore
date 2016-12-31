@@ -15,4 +15,4 @@
 .ruby-version
 .idea
 mkmf.log
-/gemfiles
+/gemfiles/*.lock
