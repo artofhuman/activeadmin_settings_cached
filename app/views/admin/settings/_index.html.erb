@@ -11,7 +11,7 @@
         <% settings_model.settings.each_pair do |name, _| %>
           <% field_name = settings_model.field_name(name) %>
           <tr class="odd">
-            <td><strong><%= f.label t("settings.attributes.#{field_name}", default: field_name) %></strong></td>
+            <td><strong><%= f.label field_name, t("settings.attributes.#{field_name}", default: field_name) %></strong></td>
             <td>
               <div class='form'>
                 <ol><%= f.input field_name, settings_model.field_options(field_name, name) %></ol>
