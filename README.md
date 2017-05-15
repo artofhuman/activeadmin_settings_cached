@@ -42,7 +42,7 @@ And configure your default values in your Settings model:
 
 ``` ruby
 class Settings < RailsSettings::CachedSettings
-   defaults[:my_awesome_settings] = 'This is my settings'
+  defaults[:my_awesome_settings] = 'This is my settings'
 end
 ```
 
