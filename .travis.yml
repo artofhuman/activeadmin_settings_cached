@@ -4,6 +4,7 @@ cache: bundler
 gemfile:
   - gemfiles/rails4.2.gemfile
   - gemfiles/rails5.0.gemfile
+  - gemfiles/rails5.1.gemfile
 
 before_script:
   - bundle exec rake setup
@@ -13,4 +14,4 @@ script:
 
 rvm:
   - 2.2.6
-  - 2.3.3
+  - 2.3.4

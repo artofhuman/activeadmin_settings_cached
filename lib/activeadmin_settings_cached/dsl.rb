@@ -8,10 +8,11 @@ module ActiveadminSettingsCached
     # @option options [String] :model_name, settings model name override (default: uses name from global config.)
     # @option options [String] :starting_with, each key must starting with, (default: nil)
     # @option options [String] :key, root key can be replacement for starting_with, (default: nil)
-    # @option options [String] :tempalte custom, template rendering (default: 'admin/settings/index')
+    # @option options [String] :template custom, template rendering (default: 'admin/settings/index')
     # @option options [String] :template_object, object to use in templates (default: ActiveadminSettingsCached::Model instance)
     # @option options [String] :display, display settings override (default: nil)
     # @option options [String] :title, title value override (default: I18n.t('settings.menu.label'))
+    # @option options [String] :update_callback, callback for update action, (default: nil)
     def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
@@ -32,6 +33,7 @@ module ActiveadminSettingsCached
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
         Rails.version.to_i >= 5 ? redirect_back(fallback_location: admin_root_path) : redirect_to(:back)
+        options[:update_callback].call if options[:update_callback].respond_to?(:call)
       end
 
       instance_eval(&block) if block_given?
