@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'activeadmin', '>= 1.0.0.pre4', '< 1.2.0'
-  s.add_dependency 'rails-settings-cached', '>= 0.5.3', '< 0.6.6'
+  s.add_dependency 'rails-settings-cached', '>= 0.5.3', '< 0.6.7'
   s.add_dependency 'dry-types', '>= 0.8.1'
 
   s.add_development_dependency "bundler"
