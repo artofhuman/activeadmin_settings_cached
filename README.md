@@ -26,6 +26,11 @@ Create your settings model:
 
 Create your settings page:
 
+    # From generators                   
+    $ rails g active_admin:settings Setting  
+                 
+    # Or manual
+
 ``` ruby
 # app/admin/setting.rb
 ActiveAdmin.register_page 'Setting' do
