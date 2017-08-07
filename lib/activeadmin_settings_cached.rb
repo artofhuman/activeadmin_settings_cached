@@ -1,25 +1,14 @@
 require 'activeadmin_settings_cached/engine'
+require 'dry/configurable'
 
 module ActiveadminSettingsCached
-  class Configuration
-    attr_accessor :model_name, :display
+  extend Dry::Configurable
 
-    def model_name
-      (@model_name ||= 'Setting').constantize
-    end
-
-    def display
-      (@display ||= {}).with_indifferent_access
-    end
+  setting :model_name, 'Setting' do |value|
+    (value).constantize 
   end
 
-  class << self
-    def config
-      @config ||= Configuration.new
-    end
-
-    def configure
-      yield config
-    end
+  setting :display, {} do |value|
+    (value).with_indifferent_access
   end
 end
