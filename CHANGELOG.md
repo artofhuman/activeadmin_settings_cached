@@ -1,7 +1,8 @@
-# Unreleased
+# v2.1.1 2017-08-07
 
 ## Fixed
 
+- Fix generator (Alexander Merkulov)
 - Fix i18n label content and 'for' attribute (Tom Richards)
 
 # v2.1.0 2016-12-16
