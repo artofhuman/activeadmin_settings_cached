@@ -12,13 +12,13 @@ module ActiveadminSettingsCached
     # @option options [String] :template_object, object to use in templates (default: ActiveadminSettingsCached::Model instance)
     # @option options [String] :display, display settings override (default: nil)
     # @option options [String] :title, title value override (default: I18n.t('settings.menu.label'))
-    # @option options [String] :update_callback, callback for update action, (default: nil)
+    # @option options [String] :after_save, callback for action after page update, (default: nil)
     def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
       options = ActiveadminSettingsCached::Options.options_for(options)
       coercion =
-          ActiveadminSettingsCached::Coercions.new(options[:template_object].defaults, options[:template_object].display)
+        ActiveadminSettingsCached::Coercions.new(options[:template_object].defaults, options[:template_object].display)
 
       content title: options[:title] do
         render partial: options[:template], locals: { settings_model: options[:template_object] }
@@ -33,7 +33,7 @@ module ActiveadminSettingsCached
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
         Rails.version.to_i >= 5 ? redirect_back(fallback_location: admin_root_path) : redirect_to(:back)
-        options[:update_callback].call if options[:update_callback].respond_to?(:call)
+        options[:after_save].call if options[:after_save].respond_to?(:call)
       end
 
       instance_eval(&block) if block_given?

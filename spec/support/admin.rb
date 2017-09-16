@@ -7,19 +7,20 @@ def base_add_resource(options = {}, &block)
 end
 
 def add_setting_resource(options = {}, &block)
-  options.merge!(model_name: 'Setting', starting_with: 'base.', title: 'Base Settings',
-                 update_callback: -> {})
+  options = { model_name: 'Setting', starting_with: 'base.', title: 'Base Settings',
+              after_save: -> {} }.merge!(options)
   base_add_resource(options, &block)
 end
 
 def add_second_setting_resource(options = {}, &block)
-  options.merge!(model_name: 'Setting', starting_with: 'second.', title: 'Second Settings')
+  options = { model_name: 'Setting', starting_with: 'second.',
+              title: 'Second Settings' }.merge!(options)
   base_add_resource(options, &block)
 end
 
 def add_some_setting_resource(options = {}, &block)
-  options.merge!(model_name: 'Setting', title: 'Some Settings', key: 'some',
-                 update_callback: -> {})
+  options = { model_name: 'Setting', title: 'Some Settings', key: 'some',
+              after_save: -> {} }.merge!(options)
   base_add_resource(options, &block)
 end
 
