@@ -31,7 +31,9 @@ module ActiveadminSettingsCached
         end
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
-        Rails.version.to_i >= 5 ? redirect_back(fallback_location: admin_root_path) : redirect_to(:back)
+        namespace = ActiveAdmin.application.default_namespace.presence
+        root_path = [namespace, :root_path].compact.join('_')
+        Rails.version.to_i >= 5 ? redirect_back(fallback_location: root_path) : redirect_to(:back)
       end
 
       instance_eval(&block) if block_given?
