@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe 'settings', type: :feature, js: true do
   before do
     Setting['some'] = {

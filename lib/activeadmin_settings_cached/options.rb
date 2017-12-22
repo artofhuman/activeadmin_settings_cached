@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveadminSettingsCached
   module Options
     VALID_OPTIONS = [

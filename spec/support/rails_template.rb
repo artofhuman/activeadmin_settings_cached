@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Rails template to build the sample app for specs
 
 generate :settings, 'Setting'

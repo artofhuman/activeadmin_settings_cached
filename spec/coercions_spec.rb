@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveadminSettingsCached::Coercions do
   let(:display) do
     Hash[
