@@ -7,12 +7,14 @@ module ActiveadminSettingsCached
       :template_object,
       :display,
       :key,
-      :title
+      :title,
+      :after_save
     ].freeze
 
     def self.options_for(options = {})
-      options[:template_object] =
-          ::ActiveadminSettingsCached::Model.new(options) unless options[:template_object]
+      unless options[:template_object]
+        options[:template_object] = ::ActiveadminSettingsCached::Model.new(options)
+      end
 
       {
         template: 'admin/settings/index',

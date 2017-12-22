@@ -135,6 +135,62 @@ RSpec.describe 'settings', type: :feature, js: true do
     end
   end
 
+  describe 'with after_save' do
+    context 'when right object' do
+      before do
+        after_save = ->() {}
+        display_settings = {
+          'base.first_setting'    => 'string',
+          'base.second_setting'   => 'boolean',
+          'base.third_setting'    => 'number',
+          'base.four_setting'     => 'number',
+          'base.five_setting'     => 'string',
+          'second.first_setting'  => 'boolean',
+          'second.second_setting' => 'string'
+        }
+
+        expect(after_save).to receive(:call).and_call_original
+
+        add_some_setting_resource(
+          template_object: ActiveadminSettingsCached::Model.new(display: display_settings),
+          after_save: after_save
+        )
+
+        visit '/admin/some_settings'
+
+        submit
+      end
+
+      it_behaves_like 'render input with value', 'AAA'
+    end
+
+    context 'when only open' do
+      before do
+        after_save = ->() {}
+
+        expect(after_save).not_to receive(:call)
+
+        add_some_setting_resource(template_object: nil,
+                                  after_save: after_save)
+
+        visit '/admin/some_settings'
+      end
+
+      it_behaves_like 'render input with value', 'CCC'
+    end
+
+    context 'when wrong object' do
+      before do
+        add_some_setting_resource(template_object: nil,
+                                  after_save: 'some')
+
+        visit '/admin/some_settings'
+      end
+
+      it_behaves_like 'render input with value', 'CCC'
+    end
+  end
+
   context 'when settings on different pages' do
     before do
       ActiveadminSettingsCached.configure do |config|

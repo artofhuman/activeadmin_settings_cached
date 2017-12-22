@@ -37,6 +37,10 @@ RSpec.describe ActiveadminSettingsCached::Model do
   end
 
   context '#attributes' do
+    before do
+      ActiveadminSettingsCached.config.display = {}
+    end
+
     it 'set options' do
       object = described_class.new(all_options)
       expect(object.attributes).to eq({
