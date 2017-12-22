@@ -1,3 +1,9 @@
+# v2.2.0 2017-12-22
+
+## Added
+
+- Add `after_save` callback (Alexander Merkulov)
+
 # v2.1.1 2017-08-07
 
 ## Fixed
