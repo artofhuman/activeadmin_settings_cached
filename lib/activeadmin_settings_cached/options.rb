@@ -7,7 +7,8 @@ module ActiveadminSettingsCached
       :template_object,
       :display,
       :key,
-      :title
+      :title,
+      :update_callback
     ].freeze
 
     def self.options_for(options = {})

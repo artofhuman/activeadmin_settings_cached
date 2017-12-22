@@ -74,6 +74,7 @@ Tool                    | Description
 :template_object				|object passing to view (default: ActiveadminSettingsCached::Model instance)
 :display    |Hash, display settings override (default: {})
 :title			|String, title value override (default: I18n.t('settings.menu.label'))
+:after_save |Proc, callback for action after POST request, (default: nil)
  
 
 ## Localization
