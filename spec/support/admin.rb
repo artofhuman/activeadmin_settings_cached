@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def base_add_resource(options = {}, &block)
   ActiveAdmin.register_page options[:title] do
     menu label: options[:title], priority: 99, parent: 'settings'

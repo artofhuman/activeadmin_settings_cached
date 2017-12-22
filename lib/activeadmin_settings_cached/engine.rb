@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails-settings-cached'
 require 'active_admin'
 

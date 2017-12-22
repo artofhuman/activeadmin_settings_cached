@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveadminSettingsCached
   class Model
     include ::ActiveModel::Model

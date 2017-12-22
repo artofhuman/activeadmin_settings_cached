@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveAdmin
   module Generators
     class SettingsGenerator < Rails::Generators::NamedBase

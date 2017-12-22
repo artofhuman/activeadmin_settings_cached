@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe ActiveadminSettingsCached::Model do
   include ActiveModel::Lint::Tests
 

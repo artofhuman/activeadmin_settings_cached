@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveadminSettingsCached
   module DSL
     # Declares settings function.
@@ -12,7 +14,7 @@ module ActiveadminSettingsCached
     # @option options [String] :template_object, object to use in templates (default: ActiveadminSettingsCached::Model instance)
     # @option options [String] :display, display settings override (default: nil)
     # @option options [String] :title, title value override (default: I18n.t('settings.menu.label'))
-    # @option options [String] :after_save, callback for action after page update, (default: nil)
+    # @option options [Proc] :after_save, callback for action after page update, (default: nil)
     def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
