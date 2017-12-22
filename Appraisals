@@ -8,8 +8,8 @@ appraise 'rails5.0' do
   gem 'listen'
 end
 
-appraise "rails5.1" do
-  gem "rails", "~> 5.1.0"
+appraise 'rails5.1' do
+  gem 'rails', '~> 5.1.0'
   gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources.git'
   gem 'listen'
 end
