@@ -84,7 +84,7 @@ You can localize settings keys in local file
 en:
   settings:
     attributes:
-      my_awesome_settings: 'My Awesome Lolaized Setting'
+      my_awesome_settings: 'My Awesome Localized Setting'
 ```
 ## Model name
 
