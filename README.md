@@ -96,6 +96,16 @@ ActiveadminSettingsCached.configure do |config|
 end
 ```
 
+## Root path
+
+By default the root path is `admin_root_path`. If you want to use a different root_path, you can specify your that in `config/initializers/active_admin_settings_cached.rb`:
+
+``` ruby
+ActiveadminSettingsCached.configure do |config|
+  config.root_path = :root_path
+end
+```
+
 ## Display options
 
 If you need define display options for settings fields, eg textarea, url or :timestamp and etc., you can set `display` option in initializer.

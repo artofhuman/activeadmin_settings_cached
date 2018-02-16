@@ -34,7 +34,8 @@ module ActiveadminSettingsCached
         end
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
-        Rails.version.to_i >= 5 ? redirect_back(fallback_location: admin_root_path) : redirect_to(:back)
+        root = self.public_send ::ActiveadminSettingsCached.config.root_path.to_sym
+        Rails.version.to_i >= 5 ? redirect_back(fallback_location: root) : redirect_to(:back)
         options[:after_save].call if options[:after_save].respond_to?(:call)
       end
 
