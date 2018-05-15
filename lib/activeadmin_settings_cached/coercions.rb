@@ -46,7 +46,7 @@ module ActiveadminSettingsCached
     end
 
     def value_or_default(type, value, default)
-      result = Dry::Types["form.#{type}"].call(value)
+      result = Dry::Types["params.#{type}"].call(value)
       if Dry::Types[type].valid?(result)
         result
       else
