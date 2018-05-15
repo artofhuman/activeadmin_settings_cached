@@ -1,3 +1,8 @@
+# Unreleased
+
+## Fixed
+- Breaking change in dry-types: Rename Types::Form to Types::Params (Julien FLAJOLLET)
+
 # v2.2.0 2017-12-22
 
 ## Added

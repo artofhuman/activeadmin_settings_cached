@@ -33,7 +33,7 @@ module ActiveadminSettingsCached
       when TrueClass, FalseClass
         -> { value_or_default('bool', value, false) }
       when Integer
-        -> { value_or_default('int', value, 0) }
+        -> { value_or_default('integer', value, 0) }
       when Float
         -> { value_or_default('float', value, 0.0) }
       when Hash, 'ActiveSupport::HashWithIndifferentAccess'
