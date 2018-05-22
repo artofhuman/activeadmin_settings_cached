@@ -1,4 +1,4 @@
-version: '2'
+version: '3.3'
 
 services:
   app:
@@ -6,8 +6,7 @@ services:
     command: 'make test'
     volumes:
       - '.:/app'
-      - gems:/usr/local/bundle
+      - bundler-data:/usr/local/bundle/:cached
 
 volumes:
-  gems:
-    external: true
+  bundler-data:
