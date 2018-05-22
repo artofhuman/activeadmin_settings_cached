@@ -1,5 +1,9 @@
 # Unreleased
 
+## Changed
+
+- Remove dry-types dependency
+
 ## Fixed
 - Breaking change in dry-types: Rename Types::Form to Types::Params (Julien FLAJOLLET)
 
