@@ -33,7 +33,7 @@ module ActiveadminSettingsCached
       when TrueClass, FalseClass
         -> { value_or_default('bool', value, false) }
       when Integer
-        -> { value_or_default('int', value, 0) }
+        -> { value_or_default('integer', value, 0) }
       when Float
         -> { value_or_default('float', value, 0.0) }
       when Hash, 'ActiveSupport::HashWithIndifferentAccess'
@@ -46,7 +46,7 @@ module ActiveadminSettingsCached
     end
 
     def value_or_default(type, value, default)
-      result = Dry::Types["form.#{type}"].call(value)
+      result = Dry::Types["params.#{type}"].call(value)
       if Dry::Types[type].valid?(result)
         result
       else
