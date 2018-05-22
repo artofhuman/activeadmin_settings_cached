@@ -6,6 +6,7 @@ gem "rails", "~> 4.2.0"
 
 group :test do
   gem "pry-byebug"
+  gem "puma"
   gem "therubyracer"
 end
 

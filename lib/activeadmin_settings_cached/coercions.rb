@@ -28,7 +28,7 @@ module ActiveadminSettingsCached
 
     private
 
-    def cast_value(name, value)
+    def cast_value(name, value) # rubocop:disable Metrics/MethodLength
       case defaults[name]
       when TrueClass, FalseClass
         -> { value_or_default('bool', value, false) }

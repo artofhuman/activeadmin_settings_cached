@@ -1,4 +1,10 @@
+RUN := run --rm
+DOCKER_COMPOSE_RUN := docker-compose $(RUN)
+
 default: test
+
+compose-bash:
+	${DOCKER_COMPOSE_RUN} app bash
 
 rake:
 	bundle exec rake ${T}
