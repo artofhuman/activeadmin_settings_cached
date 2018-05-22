@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
-require 'dry-types'
-
 module ActiveadminSettingsCached
   # Coerce user input values to defined types
   #
   # @api private
   class Coercions
+    TRUE_VALUES = %w[1 on On ON t true True TRUE T y yes Yes YES Y].freeze
+    FALSE_VALUES = %w[0 off Off OFF f false False FALSE F n no No NO N].freeze
+    BOOLEAN_MAP = ::Hash[
+      TRUE_VALUES.product([true]) + FALSE_VALUES.product([false])
+    ].freeze
+
     attr_reader :defaults, :display
 
     def initialize(defaults, display)
       @defaults = defaults
-      @display = display
+      @display  = display
     end
 
     def cast_params(params)
@@ -31,11 +35,11 @@ module ActiveadminSettingsCached
     def cast_value(name, value) # rubocop:disable Metrics/MethodLength
       case defaults[name]
       when TrueClass, FalseClass
-        -> { value_or_default('bool', value, false) }
+        -> { BOOLEAN_MAP.fetch(value, false) }
       when Integer
-        -> { value_or_default('integer', value, 0) }
+        -> { value_or_default(0) { Integer(value) } }
       when Float
-        -> { value_or_default('float', value, 0.0) }
+        -> { value_or_default(0.0) { Float(value) } }
       when Hash, 'ActiveSupport::HashWithIndifferentAccess'
         nil
       when Symbol
@@ -45,13 +49,10 @@ module ActiveadminSettingsCached
       end
     end
 
-    def value_or_default(type, value, default)
-      result = Dry::Types["params.#{type}"].call(value)
-      if Dry::Types[type].valid?(result)
-        result
-      else
-        default
-      end
+    def value_or_default(default)
+      yield
+    rescue ArgumentError, TypeError
+      default
     end
   end
 end
