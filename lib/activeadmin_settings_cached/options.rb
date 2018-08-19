@@ -22,7 +22,7 @@ module ActiveadminSettingsCached
       {
         template: 'admin/settings/index',
         title: I18n.t('settings.menu.label'),
-        fallback_location: admin_root_path? ? admin_root_path : '/'
+        fallback_location: defined? admin_root_path ? admin_root_path : '/'
       }.deep_merge(options)
     end
   end
