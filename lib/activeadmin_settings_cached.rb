@@ -4,7 +4,7 @@ require 'activeadmin_settings_cached/engine'
 
 module ActiveadminSettingsCached
   class Configuration
-    attr_accessor :model_name, :display
+    attr_accessor :model_name, :display, :fallback_location
 
     def model_name
       (@model_name ||= 'Setting').constantize
@@ -12,6 +12,10 @@ module ActiveadminSettingsCached
 
     def display
       (@display ||= {}).with_indifferent_access
+    end
+    
+    def fallback_location
+      (@fallback_location ||= '/').constantize
     end
   end
 
