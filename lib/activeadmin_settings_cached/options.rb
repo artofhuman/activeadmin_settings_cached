@@ -10,7 +10,8 @@ module ActiveadminSettingsCached
       :display,
       :key,
       :title,
-      :after_save
+      :after_save,
+      :fallback_location
     ].freeze
 
     def self.options_for(options = {})
