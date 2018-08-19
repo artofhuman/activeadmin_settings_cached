@@ -15,6 +15,7 @@ module ActiveadminSettingsCached
     # @option options [String] :display, display settings override (default: nil)
     # @option options [String] :title, title value override (default: I18n.t('settings.menu.label'))
     # @option options [Proc] :after_save, callback for action after page update, (default: nil)
+    # @option options [Proc] :fallback_location, callback for action after page update, (default: admin_root_path)
     def active_admin_settings_page(options = {}, &block)
       options.assert_valid_keys(*ActiveadminSettingsCached::Options::VALID_OPTIONS)
 
@@ -34,7 +35,7 @@ module ActiveadminSettingsCached
         end
 
         flash[:success] = t('activeadmin_settings_cached.settings.update.success'.freeze)
-        Rails.version.to_i >= 5 ? redirect_back(fallback_location: admin_root_path) : redirect_to(:back)
+        Rails.version.to_i >= 5 ? redirect_back(fallback_location: options[:fallback_location]) : redirect_to(:back)
         options[:after_save].call if options[:after_save].respond_to?(:call)
       end
 
