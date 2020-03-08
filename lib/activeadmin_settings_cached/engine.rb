@@ -9,7 +9,7 @@ module ActiveadminSettingsCached
     config.autoload_paths += Dir["#{config.root}/lib"]
 
     initializer 'activeadmin_settings_cached' do
-      ::ActiveAdmin::DSL.send(:include, ::ActiveadminSettingsCached::DSL)
+      ::ActiveAdmin::DSL.include ::ActiveadminSettingsCached::DSL
     end
   end
 end

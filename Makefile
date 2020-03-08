@@ -3,7 +3,7 @@ DOCKER_COMPOSE_RUN := docker-compose $(RUN)
 
 default: test
 
-compose-bash:
+bash:
 	${DOCKER_COMPOSE_RUN} app bash
 
 rake:

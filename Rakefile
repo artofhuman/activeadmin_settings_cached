@@ -17,4 +17,4 @@ RSpec::Core::RakeTask.new do |t|
 end
 
 desc 'Default: run the rspec examples'
-task :default => [:spec]
+task default: [:spec]

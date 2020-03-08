@@ -8,8 +8,12 @@ module ActiveadminSettingsCached
 
     def initialize(args = {})
       @attributes = {}
-      args[:model_name] = args[:model_name].constantize if args[:model_name].is_a? String
-      args[:display] = default_attributes[:display].merge!(args[:display]) if args[:display]
+      if args[:model_name].is_a? String
+        args[:model_name] = args[:model_name].constantize
+      end
+      if args[:display]
+        args[:display] = default_attributes[:display].merge!(args[:display])
+      end
       assign_attributes(merge_attributes(args))
     end
 
@@ -24,7 +28,7 @@ module ActiveadminSettingsCached
       input_opts = if default_value.is_a?(Array)
                      {
                        collection: default_value,
-                       selected: value,
+                       selected: value
                      }
                    elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
                          display[settings_name].to_s == 'boolean'
@@ -33,7 +37,7 @@ module ActiveadminSettingsCached
                      }
                    else
                      {
-                       input_html: { value: value, placeholder: default_value },
+                       input_html: { value: value, placeholder: default_value }
                      }
                    end
 
@@ -84,7 +88,7 @@ module ActiveadminSettingsCached
       false
     end
 
-    alias_method :to_hash, :attributes
+    alias to_hash attributes
 
     protected
 
@@ -101,7 +105,7 @@ module ActiveadminSettingsCached
     end
 
     def clean_key(key)
-      key.is_a?(Symbol) ? key : "#{key.sub("#{attributes[:key]}.", '')}"
+      key.is_a?(Symbol) ? key : key.sub("#{attributes[:key]}.", '').to_s
     end
 
     def assign_attributes(args = {})

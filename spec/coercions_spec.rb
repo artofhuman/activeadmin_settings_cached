@@ -3,25 +3,25 @@
 RSpec.describe ActiveadminSettingsCached::Coercions do
   let(:display) do
     Hash[
-      'base.first_setting'    => 'string',
-      'base.second_setting'   => 'boolean',
-      'base.third_setting'    => 'number',
-      'base.four_setting'     => 'number',
-      'second.first_setting'  => 'boolean',
+      'base.first_setting' => 'string',
+      'base.second_setting' => 'boolean',
+      'base.third_setting' => 'number',
+      'base.four_setting' => 'number',
+      'second.first_setting' => 'boolean',
       'second.second_setting' => 'string'
     ].with_indifferent_access
   end
 
   let(:defaults) do
     Hash[
-      'base.first_setting'    => 'AAA',
-      'base.second_setting'   => true,
-      'base.third_setting'    => 5,
-      'base.four_setting'     => 5.5,
-      'base.five_setting'     => :aaa,
-      'second.first_setting'  => false,
+      'base.first_setting' => 'AAA',
+      'base.second_setting' => true,
+      'base.third_setting' => 5,
+      'base.four_setting' => 5.5,
+      'base.five_setting' => :aaa,
+      'second.first_setting' => false,
       'second.second_setting' => 'BBB',
-      'some'                  => {}
+      'some' => {}
     ].with_indifferent_access
   end
 
@@ -33,12 +33,12 @@ RSpec.describe ActiveadminSettingsCached::Coercions do
     let(:params) do
       ActionController::Parameters.new(
         Hash[
-          'base.first_setting'    => 'BBB',
-          'base.second_setting'   => 'false',
-          'base.third_setting'    => '155',
-          'base.four_setting'     => '55.5',
-          'base.five_setting'     => 'bbb',
-          'second.first_setting'  => 'true',
+          'base.first_setting' => 'BBB',
+          'base.second_setting' => 'false',
+          'base.third_setting' => '155',
+          'base.four_setting' => '55.5',
+          'base.five_setting' => 'bbb',
+          'second.first_setting' => 'true',
           'second.second_setting' => 'AAA'
         ]
       )
@@ -60,11 +60,11 @@ RSpec.describe ActiveadminSettingsCached::Coercions do
     let(:params) do
       ActionController::Parameters.new(
         Hash[
-          'base.second_setting'  => 'hjgj',
-          'base.third_setting'   => 'fhfh',
-          'base.four_setting'    => 'gjfhg',
+          'base.second_setting' => 'hjgj',
+          'base.third_setting' => 'fhfh',
+          'base.four_setting' => 'gjfhg',
           'second.first_setting' => 'ggf',
-          'some'                 => {}
+          'some' => {}
         ]
       )
     end

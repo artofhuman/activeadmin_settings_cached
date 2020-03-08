@@ -2,15 +2,15 @@
 
 module ActiveadminSettingsCached
   module Options
-    VALID_OPTIONS = [
-      :model_name,
-      :starting_with,
-      :template,
-      :template_object,
-      :display,
-      :key,
-      :title,
-      :after_save
+    VALID_OPTIONS = %i[
+      model_name
+      starting_with
+      template
+      template_object
+      display
+      key
+      title
+      after_save
     ].freeze
 
     def self.options_for(options = {})

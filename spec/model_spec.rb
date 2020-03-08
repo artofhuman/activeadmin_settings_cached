@@ -3,17 +3,17 @@
 RSpec.describe ActiveadminSettingsCached::Model do
   include ActiveModel::Lint::Tests
 
-  ActiveModel::Lint::Tests.public_instance_methods.map{|m| m.to_s}.grep(/^test/).each do |m|
-    example m.gsub('_',' ') do
+  ActiveModel::Lint::Tests.public_instance_methods.map(&:to_s).grep(/^test/).each do |m|
+    example m.gsub('_', ' ') do
       send m
     end
   end
 
   before(:all) do
     Setting.merge!('some', {
-      'first_setting' => 'CCC',
-      'second_setting' => true
-    })
+                     'first_setting' => 'CCC',
+                     'second_setting' => true
+                   })
   end
 
   let(:all_options) do
@@ -21,7 +21,7 @@ RSpec.describe ActiveadminSettingsCached::Model do
       model_name: 'Setting',
       starting_with: 'base.',
       key: nil,
-      display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean'}
+      display: { 'base.first_setting' => 'string', 'base.second_setting' => 'boolean' }
     }
   end
 
@@ -30,7 +30,7 @@ RSpec.describe ActiveadminSettingsCached::Model do
       model_name: 'Setting',
       starting_with: nil,
       key: 'some',
-      display: {'some.first_setting' => 'string', 'base.second_setting' => 'boolean'}
+      display: { 'some.first_setting' => 'string', 'base.second_setting' => 'boolean' }
     }
   end
 
@@ -46,31 +46,31 @@ RSpec.describe ActiveadminSettingsCached::Model do
     it 'set options' do
       object = described_class.new(all_options)
       expect(object.attributes).to eq({
-                                         starting_with: all_options[:starting_with],
-                                         key: nil,
-                                         model_name: Setting,
-                                         display: all_options[:display]
-                                       })
+                                        starting_with: all_options[:starting_with],
+                                        key: nil,
+                                        model_name: Setting,
+                                        display: all_options[:display]
+                                      })
     end
 
     it 'set default options' do
       object = described_class.new(no_options)
       expect(object.attributes).to eq({
-                                         starting_with: nil,
-                                         key: nil,
-                                         model_name: Setting,
-                                         display: {}
-                                       })
+                                        starting_with: nil,
+                                        key: nil,
+                                        model_name: Setting,
+                                        display: {}
+                                      })
     end
 
     it 'set key options' do
       object = described_class.new(key_options)
       expect(object.attributes).to eq({
-                                         starting_with: nil,
-                                         key: key_options[:key],
-                                         model_name: Setting,
-                                         display: key_options[:display]
-                                       })
+                                        starting_with: nil,
+                                        key: key_options[:key],
+                                        model_name: Setting,
+                                        display: key_options[:display]
+                                      })
     end
   end
 
@@ -89,39 +89,35 @@ RSpec.describe ActiveadminSettingsCached::Model do
   context '#field_options' do
     it 'with default element' do
       object = described_class.new(all_options)
-      expect(object.field_options('base.first_setting', 'base.first_setting')).to eq({as: 'string',
-                                                                label: false,
-                                                                input_html: {value: 'AAA', placeholder: 'AAA'}
-                                                               })
+      expect(object.field_options('base.first_setting', 'base.first_setting')).to eq({ as: 'string',
+                                                                                       label: false,
+                                                                                       input_html: { value: 'AAA', placeholder: 'AAA' } })
     end
 
     it 'with keyed element' do
       object = described_class.new(key_options)
-      expect(object.field_options('some.first_setting', 'first_setting')).to eq({as: 'string',
-                                                                label: false,
-                                                                input_html: {value: 'CCC', placeholder: 'AAA'}
-                                                               })
+      expect(object.field_options('some.first_setting', 'first_setting')).to eq({ as: 'string',
+                                                                                  label: false,
+                                                                                  input_html: { value: 'CCC', placeholder: 'AAA' } })
     end
 
     it 'with array element' do
-      object = described_class.new(all_options.merge({display: {'base.first_setting' => 'string',
-                                                                'base.second_setting' => 'boolean',
-                                                                'base.six_setting' => 'array'}}))
-      expect(object.field_options('base.six_setting', 'base.six_setting')).to eq({as: 'array',
-                                                              label: false,
-                                                              collection: %w(a b),
-                                                              selected: %w(a b)
-                                                             })
+      object = described_class.new(all_options.merge({ display: { 'base.first_setting' => 'string',
+                                                                  'base.second_setting' => 'boolean',
+                                                                  'base.six_setting' => 'array' } }))
+      expect(object.field_options('base.six_setting', 'base.six_setting')).to eq({ as: 'array',
+                                                                                   label: false,
+                                                                                   collection: %w[a b],
+                                                                                   selected: %w[a b] })
     end
 
     it 'with boolean element' do
       object = described_class.new(all_options)
-      expect(object.field_options('base.second_setting', 'base.second_setting')).to eq({as: 'boolean',
-                                                                 label: '',
-                                                                 input_html: {checked: true},
-                                                                 checked_value: 'true',
-                                                                 unchecked_value: 'false'
-                                                                })
+      expect(object.field_options('base.second_setting', 'base.second_setting')).to eq({ as: 'boolean',
+                                                                                         label: '',
+                                                                                         input_html: { checked: true },
+                                                                                         checked_value: 'true',
+                                                                                         unchecked_value: 'false' })
     end
   end
 

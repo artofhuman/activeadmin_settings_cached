@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Rails template to build the sample app for specs
 
 generate :settings, 'Setting'
@@ -10,7 +11,7 @@ generate :'formtastic:install'
 generate :'settings:install'
 
 # Configure Setup
-inject_into_file 'config/initializers/active_admin.rb', <<-RUBY, before: "ActiveAdmin.setup do |config|"
+inject_into_file 'config/initializers/active_admin.rb', <<-RUBY, before: 'ActiveAdmin.setup do |config|'
   ActiveadminSettingsCached.configure do |config|
     config.model_name = 'Setting'
   end

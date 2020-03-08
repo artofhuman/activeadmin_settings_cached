@@ -72,15 +72,15 @@ RSpec.describe 'settings', type: :feature, js: true do
     before do
       ActiveadminSettingsCached.configure do |config|
         config.display = {
-          'base.first_setting'    => 'string',
-          'base.second_setting'   => 'boolean',
-          'base.third_setting'    => 'number',
-          'base.four_setting'     => 'number',
-          'base.five_setting'     => 'string',
-          'second.first_setting'  => 'boolean',
+          'base.first_setting' => 'string',
+          'base.second_setting' => 'boolean',
+          'base.third_setting' => 'number',
+          'base.four_setting' => 'number',
+          'base.five_setting' => 'string',
+          'second.first_setting' => 'boolean',
           'second.second_setting' => 'string',
-          'some.first_setting'    => 'string',
-          'some.second_setting'   => 'boolean'
+          'some.first_setting' => 'string',
+          'some.second_setting' => 'boolean'
         }
       end
 
@@ -107,12 +107,12 @@ RSpec.describe 'settings', type: :feature, js: true do
     context 'when right object' do
       before do
         display_settings = {
-          'base.first_setting'    => 'string',
-          'base.second_setting'   => 'boolean',
-          'base.third_setting'    => 'number',
-          'base.four_setting'     => 'number',
-          'base.five_setting'     => 'string',
-          'second.first_setting'  => 'boolean',
+          'base.first_setting' => 'string',
+          'base.second_setting' => 'boolean',
+          'base.third_setting' => 'number',
+          'base.four_setting' => 'number',
+          'base.five_setting' => 'string',
+          'second.first_setting' => 'boolean',
           'second.second_setting' => 'string'
         }
 
@@ -140,14 +140,14 @@ RSpec.describe 'settings', type: :feature, js: true do
   describe 'with after_save' do
     context 'when right object' do
       before do
-        after_save = ->() {}
+        after_save = -> {}
         display_settings = {
-          'base.first_setting'    => 'string',
-          'base.second_setting'   => 'boolean',
-          'base.third_setting'    => 'number',
-          'base.four_setting'     => 'number',
-          'base.five_setting'     => 'string',
-          'second.first_setting'  => 'boolean',
+          'base.first_setting' => 'string',
+          'base.second_setting' => 'boolean',
+          'base.third_setting' => 'number',
+          'base.four_setting' => 'number',
+          'base.five_setting' => 'string',
+          'second.first_setting' => 'boolean',
           'second.second_setting' => 'string'
         }
 
@@ -168,7 +168,7 @@ RSpec.describe 'settings', type: :feature, js: true do
 
     context 'when only open' do
       before do
-        after_save = ->() {}
+        after_save = -> {}
 
         expect(after_save).not_to receive(:call)
 
@@ -201,36 +201,36 @@ RSpec.describe 'settings', type: :feature, js: true do
 
       add_setting_resource(
         display: {
-          'base.first_setting'  => 'string',
+          'base.first_setting' => 'string',
           'base.second_setting' => 'boolean',
-          'base.third_setting'  => 'number',
-          'base.four_setting'   => 'number',
-          'base.five_setting'   => 'string'
+          'base.third_setting' => 'number',
+          'base.four_setting' => 'number',
+          'base.five_setting' => 'string'
         }
       )
 
       add_second_setting_resource(
         display: {
-          'second.first_setting'  => 'boolean',
+          'second.first_setting' => 'boolean',
           'second.second_setting' => 'string'
         }
       )
 
       add_some_setting_resource(
         display: {
-          'some.first_setting'  => 'string',
+          'some.first_setting' => 'string',
           'some.second_setting' => 'boolean'
         }
       )
 
       add_all_setting_resource(
         display: {
-          'base.first_setting'    => 'string',
-          'base.second_setting'   => 'boolean',
-          'base.third_setting'    => 'number',
-          'base.four_setting'     => 'number',
-          'base.five_setting'     => 'string',
-          'second.first_setting'  => 'boolean',
+          'base.first_setting' => 'string',
+          'base.second_setting' => 'boolean',
+          'base.third_setting' => 'number',
+          'base.four_setting' => 'number',
+          'base.five_setting' => 'string',
+          'second.first_setting' => 'boolean',
           'second.second_setting' => 'string'
         }
       )
@@ -263,7 +263,7 @@ RSpec.describe 'settings', type: :feature, js: true do
       it_behaves_like 'render input with value', 'AAA'
       it_behaves_like 'render input with value', 'BBB'
       # FIXME
-      #it_behaves_like 'render input with value', Setting['some'].with_indifferent_access
+      # it_behaves_like 'render input with value', Setting['some'].with_indifferent_access
 
       it_behaves_like 'fill and save base settings to db'
       it_behaves_like 'fill and save second settings to db'

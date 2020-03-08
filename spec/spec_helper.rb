@@ -6,9 +6,9 @@ require 'coveralls'
 Coveralls.wear!
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH << File.expand_path('../support', __FILE__)
+$LOAD_PATH << File.expand_path('support', __dir__)
 
-ENV['BUNDLE_GEMFILE'] = File.expand_path('../../Gemfile', __FILE__)
+ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', __dir__)
 require 'bundler'
 Bundler.setup
 
@@ -18,9 +18,7 @@ require 'rails'
 ENV['RAILS'] = Rails.version
 ENV['RAILS_ROOT'] = File.expand_path("../rails/rails-#{ENV['RAILS']}", __FILE__)
 # Create the test app if it doesn't exists
-unless File.exist?(ENV['RAILS_ROOT'])
-  system 'rake setup'
-end
+system 'rake setup' unless File.exist?(ENV['RAILS_ROOT'])
 
 require 'active_model'
 # require ActiveRecord to ensure that Ransack loads correctly
@@ -43,12 +41,12 @@ unless ENV['CAPYBARA_FIREFOX']
 
   Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, {
-        js_errors: true,
-        timeout: 80,
-        debug: true,
-        :phantomjs_options => ['--debug=no', '--load-images=no']
+                                        js_errors: true,
+                                        timeout: 80,
+                                        debug: true,
+                                        phantomjs_options: ['--debug=no', '--load-images=no']
 
-    })
+                                      })
   end
 
   Capybara.javascript_driver = :poltergeist

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'activeadmin_settings_cached/version'
 
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'poltergeist'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'rubocop', '~> 0.80.0'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'sqlite3'
 end
