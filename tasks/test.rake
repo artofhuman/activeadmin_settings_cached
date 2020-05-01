@@ -13,7 +13,6 @@ task :setup do
       --skip-gemfile
       --skip-bundle
       --skip-git
-      --skip-keeps
       --skip-turbolinks
       --skip-test-unit
       --skip-spring
