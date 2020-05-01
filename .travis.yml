@@ -2,8 +2,6 @@ language: ruby
 cache: bundler
 
 gemfile:
-  - gemfiles/rails4.2.gemfile
-  - gemfiles/rails5.0.gemfile
   - gemfiles/rails5.1.gemfile
 
 before_script:
@@ -13,5 +11,4 @@ script:
   - bundle exec rake
 
 rvm:
-  - 2.2.6
-  - 2.3.4
+  - 2.6.6
