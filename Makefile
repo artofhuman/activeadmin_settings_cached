@@ -12,7 +12,7 @@ rake:
 test: appraisals
 	bundle exec appraisal rspec ${T}
 
-appraisals: setup
+appraisals:
 	bundle exec appraisal install
 
 setup:
