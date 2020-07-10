@@ -5,6 +5,7 @@ gemfile:
   - gemfiles/rails4.2.gemfile
   - gemfiles/rails5.0.gemfile
   - gemfiles/rails5.1.gemfile
+  - gemfiles/rails6.0.gemfile
 
 before_script:
   - bundle exec rake setup
@@ -13,5 +14,4 @@ script:
   - bundle exec rake
 
 rvm:
-  - 2.2.6
-  - 2.3.4
+  - 2.5.0
