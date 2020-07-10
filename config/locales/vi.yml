@@ -1,0 +1,16 @@
+en:
+  activeadmin_settings_cached:
+    settings:
+      update:
+        success: Đã cập nhật thiết lập.
+
+  activerecord:
+    models:
+      settings: Thiết lập
+
+  settings:
+    menu:
+      label: Thiết lập
+    index:
+      name: Tên
+      value: Giá trị

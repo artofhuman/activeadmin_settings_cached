@@ -1,4 +1,4 @@
-FROM ruby:2.3-slim
+FROM ruby:2.5-slim
 
 ENV PHANTOMJS_VERSION 1.9.8
 
