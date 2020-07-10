@@ -5,6 +5,7 @@ gemfile:
   - gemfiles/rails5.1.gemfile
 
 before_script:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
   - bundle exec rake setup
 
 script:
