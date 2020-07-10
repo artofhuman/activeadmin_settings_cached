@@ -5,6 +5,8 @@ source "https://rubygems.org"
 gem "rails", "~> 5.1.0"
 gem "inherited_resources", "~> 1.11"
 gem "listen"
+gem "bootsnap", require: "bootsnap/setup"
+gem "sqlite3"
 
 group :test do
   gem "pry-byebug"
