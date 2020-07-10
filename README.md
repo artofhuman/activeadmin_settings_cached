@@ -119,3 +119,10 @@ Available options see [here](https://github.com/justinfrench/formtastic#the-avai
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## How run local example
+
+make bash
+make setup
+cd spec/rails/rails-5.1.7/
+BUNDLE_GEMFILE=/app/gemfiles/rails5.1.gemfile bundle exec rails s -b 0.0.0.0

@@ -1,10 +1,11 @@
-FROM ruby:2.3-slim
+FROM ruby:2.7-slim
 
 ENV PHANTOMJS_VERSION 1.9.8
 
 RUN apt-get update -qq && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
   make \
+  curl \
   gcc \
   g++ \
   libsqlite3-dev \
@@ -22,5 +23,7 @@ RUN \
   rm -f /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 && \
   mv /tmp/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/ /srv/var/phantomjs && \
   ln -s /srv/var/phantomjs/bin/phantomjs /usr/bin/phantomjs
+
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 WORKDIR /app

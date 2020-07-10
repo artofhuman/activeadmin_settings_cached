@@ -5,8 +5,13 @@ services:
     build: '.'
     command: 'make test'
     volumes:
-      - '.:/app'
-      - bundler-data:/usr/local/bundle/:cached
+      - .:/app:cached
+      - bundler-data:/usr/local/bundle/
+      - bin-data:/usr/local/bin/
+    ports:
+      - "3000:3000"
+
 
 volumes:
   bundler-data:
+  bin-data:

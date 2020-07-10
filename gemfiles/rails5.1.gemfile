@@ -3,13 +3,14 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 5.1.0"
-gem "inherited_resources", git: "https://github.com/activeadmin/inherited_resources.git"
+gem "inherited_resources"
 gem "listen"
 
 group :test do
   gem "pry-byebug"
   gem "puma"
   gem "therubyracer"
+  gem "sassc"
 end
 
 gemspec path: "../"
