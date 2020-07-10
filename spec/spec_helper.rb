@@ -43,7 +43,7 @@ unless ENV['CAPYBARA_FIREFOX']
 
   Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, {
-        js_errors: true,
+        js_errors: false,
         timeout: 80,
         debug: true,
         :phantomjs_options => ['--debug=no', '--load-images=no']

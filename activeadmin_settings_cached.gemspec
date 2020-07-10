@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_dependency 'activeadmin'
+  s.add_dependency 'activeadmin', '~> 1.0', '< 1.2.0'
   s.add_dependency 'rails-settings-cached', '>= 0.5.3', '< 0.6.7'
 
   s.add_development_dependency 'appraisal'

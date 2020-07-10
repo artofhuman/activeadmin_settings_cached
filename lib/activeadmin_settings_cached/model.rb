@@ -127,6 +127,7 @@ module ActiveadminSettingsCached
       attributes[:model_name]
     end
 
+    # TODO: remove 4.1
     def meth
       if Rails.version >= '4.1.0'
         :get_all
