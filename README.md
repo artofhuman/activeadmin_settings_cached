@@ -122,7 +122,9 @@ Available options see [here](https://github.com/justinfrench/formtastic#the-avai
 
 ## How run local example
 
+```
 make bash
 make setup
 cd spec/rails/rails-5.1.7/
 BUNDLE_GEMFILE=/app/gemfiles/rails5.1.gemfile bundle exec rails s -b 0.0.0.0
+```
