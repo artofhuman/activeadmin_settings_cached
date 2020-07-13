@@ -89,7 +89,7 @@ module ActiveadminSettingsCached
     protected
 
     def load_settings
-      settings_model.public_send(meth, attributes[:starting_with])
+      settings_model.public_send(:get_all, attributes[:starting_with])
     end
 
     def load_settings_by_key
@@ -125,15 +125,6 @@ module ActiveadminSettingsCached
 
     def settings_model
       attributes[:model_name]
-    end
-
-    # TODO: remove 4.1
-    def meth
-      if Rails.version >= '4.1.0'
-        :get_all
-      else
-        :all
-      end
     end
   end
 end
