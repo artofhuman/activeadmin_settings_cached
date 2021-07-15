@@ -25,9 +25,9 @@ Create your settings model:
 
 Create your settings page:
 
-    # From generators                   
-    $ rails g active_admin:settings Setting  
-                 
+    # From generators
+    $ rails g active_admin:settings Setting
+
     # Or manual
 
 ``` ruby
@@ -67,14 +67,12 @@ end
 Tool                    | Description
 ---------------------   | -----------
 :model_name					|String, settings model name override (default: uses name from global config.)
-:starting_with			|String, each key must starting with, (default: nil)
-:key			|String, Symbol root key, can be replacement for starting_with, (default: nil)
 :template				|String, custom template rendering (default: 'admin/settings/index')
 :template_object				|object passing to view (default: ActiveadminSettingsCached::Model instance)
 :display    |Hash, display settings override (default: {})
 :title			|String, title value override (default: I18n.t('settings.menu.label'))
 :after_save |Proc, callback for action after POST request, (default: nil)
- 
+
 
 ## Localization
 You can localize settings keys in local file
