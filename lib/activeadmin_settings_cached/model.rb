@@ -26,11 +26,23 @@ module ActiveadminSettingsCached
                        collection: default_value,
                        selected: value,
                      }
-                   elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
-                         display[settings_name].to_s == 'boolean'
+                   elsif (field_name.include?("time") || field_name.include?("hour"))
+                   {
+                       as: :time_picker,
+                       input_html: { value: value, placeholder: default_value },
+                   }
+                   elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass))
                      {
+                       as: :boolean,
                        input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
                      }
+
+
+                   #elsif (default_value.is_a?(TrueClass) || default_value.is_a?(FalseClass)) &&
+                   #      display[settings_name].to_s == 'boolean'
+                   #  {
+                   #    input_html: { checked: value }, label: '', checked_value: 'true', unchecked_value: 'false'
+                   #  }
                    else
                      {
                        input_html: { value: value, placeholder: default_value },
