@@ -11,11 +11,10 @@ module ActiveadminSettingsCached
       TRUE_VALUES.product([true]) + FALSE_VALUES.product([false])
     ].freeze
 
-    attr_reader :defaults, :display
+    attr_reader :defaults
 
-    def initialize(defaults, display)
+    def initialize(defaults)
       @defaults = defaults
-      @display  = display
     end
 
     def cast_params(params)
@@ -31,6 +30,11 @@ module ActiveadminSettingsCached
     end
 
     private
+
+    
+    def cast_value(name, value)
+    end
+
 
     def cast_value(name, value) # rubocop:disable Metrics/MethodLength
       case defaults[name]

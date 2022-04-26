@@ -13,17 +13,13 @@ module ActiveadminSettingsCached
       assign_attributes(merge_attributes(args))
     end
 
-    def field_name(settings_name)
-      has_key? ? "#{attributes[:key]}.#{settings_name}" : settings_name
-    end
-
-    def field_options(settings_name, key_name)
-      default_value = defaults[settings_name]
-      value = settings[key_name]
+    def field_options(field_name, value)
+      field = settings_model.get_field(field_name)
+      default_value = field[:default]
 
       input_opts = if default_value.is_a?(Array)
                      {
-                       collection: default_value,
+                       collection: default_value,  #TODO: allow multiply for colleactions
                        selected: value,
                      }
                    elsif (field_name.include?("time") || field_name.include?("hour"))
@@ -49,47 +45,23 @@ module ActiveadminSettingsCached
                      }
                    end
 
-      { as: display[settings_name], label: false }
+      { as: display[field_name], label: false }
         .merge!(input_opts)
     end
 
     def settings
-      data = has_key? ? load_settings_by_key : load_settings
-      return unless data
+      settings_values = load_settings_values
+      return unless settings_values
 
-      ::ActiveSupport::OrderedHash[data.to_a.sort { |a, b| a.first <=> b.first }]
-    end
-
-    def defaults
-      settings_model.respond_to?(:defaults) ?
-          settings_model.defaults :
-          ::RailsSettings::Default
-    end
-
-    def defaults_keys
-      settings_model.respond_to?(:defaults) ?
-          settings_model.defaults.keys :
-          ::RailsSettings::Default.instance.keys
+      ::ActiveSupport::OrderedHash[settings_values.to_a.sort { |a, b| a.first <=> b.first }]
     end
 
     def display
       attributes[:display]
     end
 
-    def [](param)
-      settings_model[param]
-    end
-
-    def []=(param, value)
-      settings_model[param] = value
-    end
-
-    def save(key, value)
-      if has_key?
-        settings_model.merge!(attributes[:key], { clean_key(key) => value })
-      else
-        self[key] = value
-      end
+    def save(field_name, value)
+      settings_model.public_send("#{field_name}=", value)
     end
 
     def persisted?
@@ -98,22 +70,12 @@ module ActiveadminSettingsCached
 
     alias_method :to_hash, :attributes
 
-    protected
+    private
 
-    def load_settings
-      settings_model.public_send(:get_all, attributes[:starting_with])
-    end
-
-    def load_settings_by_key
-      self[attributes[:key]]
-    end
-
-    def has_key?
-      attributes[:key].present?
-    end
-
-    def clean_key(key)
-      key.is_a?(Symbol) ? key : "#{key.sub("#{attributes[:key]}.", '')}"
+    def load_settings_values
+      settings_model.keys.each_with_object({}) do |key, acc|
+        acc[key] = settings_model.public_send(key)
+      end
     end
 
     def assign_attributes(args = {})
@@ -122,8 +84,6 @@ module ActiveadminSettingsCached
 
     def default_attributes
       {
-        starting_with: nil,
-        key: nil,
         model_name: ::ActiveadminSettingsCached.config.model_name,
         display: ::ActiveadminSettingsCached.config.display
       }
