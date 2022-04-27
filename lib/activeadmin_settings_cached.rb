@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'activeadmin_settings_cached/engine'
+require 'activeadmin_settings_cached/dsl'
 
 module ActiveadminSettingsCached
   class Configuration
