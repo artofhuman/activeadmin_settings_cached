@@ -4,11 +4,10 @@ module ActiveadminSettingsCached
   module Options
     VALID_OPTIONS = [
       :model_name,
-      :starting_with,
+      :scope,
       :template,
       :template_object,
       :display,
-      :key,
       :title,
       :after_save
     ].freeze

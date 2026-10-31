@@ -1,3 +1,18 @@
+# v3.0.0 Unreleased
+
+## Changed
+
+- Support rails-settings-cached v2 (`>= 2.8.2`), drop support for older versions
+- Show editable fields grouped by scope, input depends on field type
+- Values are coerced by rails-settings-cached, `Coercions` is removed
+- Save only changed values
+- Show validation errors in flash
+- Test against Rails 7.2 and 8.0 on GitHub Actions, remove Travis CI
+
+## Removed
+
+- `starting_with` and `key` options, use `scope` option instead
+
 # v2.3.1 2018-05-22
 
 ## Changed

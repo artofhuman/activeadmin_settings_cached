@@ -8,21 +8,14 @@ def base_add_resource(options = {}, &block)
   Rails.application.reload_routes!
 end
 
-def add_setting_resource(options = {}, &block)
-  options = { model_name: 'Setting', starting_with: 'base.', title: 'Base Settings',
+def add_base_setting_resource(options = {}, &block)
+  options = { model_name: 'Setting', scope: :base, title: 'Base Settings',
               after_save: -> {} }.merge!(options)
   base_add_resource(options, &block)
 end
 
 def add_second_setting_resource(options = {}, &block)
-  options = { model_name: 'Setting', starting_with: 'second.',
-              title: 'Second Settings' }.merge!(options)
-  base_add_resource(options, &block)
-end
-
-def add_some_setting_resource(options = {}, &block)
-  options = { model_name: 'Setting', title: 'Some Settings', key: 'some',
-              after_save: -> {} }.merge!(options)
+  options = { model_name: 'Setting', scope: :second, title: 'Second Settings' }.merge!(options)
   base_add_resource(options, &block)
 end
 

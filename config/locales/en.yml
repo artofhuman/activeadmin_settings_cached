@@ -3,6 +3,7 @@ en:
     settings:
       update:
         success: Settings was successfully updated.
+        error: 'Settings were not saved: %{details}'
 
   activerecord:
     models:
