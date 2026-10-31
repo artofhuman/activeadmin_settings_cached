@@ -1,7 +1,7 @@
 # Activeadmin Settings Cached
 
 [![Gem Version](https://badge.fury.io/rb/activeadmin_settings_cached.svg)](http://badge.fury.io/rb/activeadmin_settings_cached)
-[![Build Status](https://travis-ci.org/artofhuman/activeadmin_settings_cached.svg?branch=master)](https://travis-ci.org/artofhuman/activeadmin_settings_cached)
+[![CI](https://github.com/artofhuman/activeadmin_settings_cached/actions/workflows/ci.yml/badge.svg)](https://github.com/artofhuman/activeadmin_settings_cached/actions/workflows/ci.yml)
 
 Provides a nice UI interface for [rails-settings-cached](https://github.com/huacnlee/rails-settings-cached) gem in [Active Admin](http://activeadmin.info/).
 

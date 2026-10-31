@@ -7,7 +7,7 @@
 - Values are coerced by rails-settings-cached, `Coercions` is removed
 - Save only changed values
 - Show validation errors in flash
-- Test against Rails 7.2 and 8.0
+- Test against Rails 7.2 and 8.0 on GitHub Actions, remove Travis CI
 
 ## Removed
 
