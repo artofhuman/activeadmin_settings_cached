@@ -3,6 +3,7 @@ de:
     settings:
       update:
         success: Konfiguration wurde gespeichert.
+        error: 'Konfiguration konnte nicht gespeichert werden: %{details}'
 
   activerecord:
     models:

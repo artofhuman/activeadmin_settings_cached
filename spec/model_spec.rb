@@ -9,165 +9,120 @@ RSpec.describe ActiveadminSettingsCached::Model do
     end
   end
 
-  before(:all) do
-    Setting.merge!('some', {
-      'first_setting' => 'CCC',
-      'second_setting' => true
-    })
+  before do
+    ActiveadminSettingsCached.config.display = {}
   end
 
-  let(:all_options) do
-    {
-      model_name: 'Setting',
-      starting_with: 'base.',
-      key: nil,
-      display: {'base.first_setting' => 'string', 'base.second_setting' => 'boolean'}
-    }
-  end
+  subject(:object) { described_class.new(options) }
 
-  let(:key_options) do
-    {
-      model_name: 'Setting',
-      starting_with: nil,
-      key: 'some',
-      display: {'some.first_setting' => 'string', 'base.second_setting' => 'boolean'}
-    }
-  end
-
-  let(:no_options) do
-    {}
-  end
+  let(:options) { { model_name: 'Setting', scope: :base, display: { 'title' => 'text' } } }
 
   context '#attributes' do
-    before do
-      ActiveadminSettingsCached.config.display = {}
-    end
-
     it 'set options' do
-      object = described_class.new(all_options)
       expect(object.attributes).to eq({
-                                         starting_with: all_options[:starting_with],
-                                         key: nil,
-                                         model_name: Setting,
-                                         display: all_options[:display]
-                                       })
+                                        scope: :base,
+                                        model_name: Setting,
+                                        display: { 'title' => 'text' }
+                                      })
     end
 
-    it 'set default options' do
-      object = described_class.new(no_options)
-      expect(object.attributes).to eq({
-                                         starting_with: nil,
-                                         key: nil,
-                                         model_name: Setting,
-                                         display: {}
-                                       })
-    end
+    context 'without options' do
+      let(:options) { {} }
 
-    it 'set key options' do
-      object = described_class.new(key_options)
-      expect(object.attributes).to eq({
-                                         starting_with: nil,
-                                         key: key_options[:key],
-                                         model_name: Setting,
-                                         display: key_options[:display]
-                                       })
+      it 'set default options' do
+        expect(object.attributes).to eq({
+                                          scope: nil,
+                                          model_name: Setting,
+                                          display: {}
+                                        })
+      end
     end
   end
 
-  context '#field_name' do
-    it 'with keyed name' do
-      object = described_class.new(key_options)
-      expect(object.field_name('first_setting')).to eq('some.first_setting')
+  context '#keys' do
+    it 'returns editable keys of scope' do
+      expect(object.keys).to eq %w[title captcha_enabled user_limit tax_rate default_locale]
     end
 
-    it 'with normal name' do
-      object = described_class.new(all_options)
-      expect(object.field_name('base.first_setting')).to eq('base.first_setting')
+    context 'with several scopes' do
+      let(:options) { { scope: %i[base second] } }
+
+      it { expect(object.keys).to include('title', 'admin_emails') }
+      it { expect(object.keys).not_to include('app_name', 'secret') }
+    end
+
+    context 'without scope' do
+      let(:options) { {} }
+
+      it { expect(object.keys).to include('app_name', 'title', 'admin_emails') }
+      it { expect(object.keys).not_to include('secret') }
+    end
+  end
+
+  context '#fields_by_scope' do
+    let(:options) { {} }
+
+    it 'groups fields' do
+      expect(object.fields_by_scope.keys).to eq [nil, :base, :second]
     end
   end
 
   context '#field_options' do
-    it 'with default element' do
-      object = described_class.new(all_options)
-      expect(object.field_options('base.first_setting', 'base.first_setting')).to eq({as: 'string',
-                                                                label: false,
-                                                                input_html: {value: 'AAA', placeholder: 'AAA'}
-                                                               })
+    let(:options) { {} }
+
+    it 'with string element' do
+      expect(object.field_options('app_name')).to eq(as: :string, label: false,
+                                                     input_html: { value: 'AAA', placeholder: 'AAA' })
     end
 
-    it 'with keyed element' do
-      object = described_class.new(key_options)
-      expect(object.field_options('some.first_setting', 'first_setting')).to eq({as: 'string',
-                                                                label: false,
-                                                                input_html: {value: 'CCC', placeholder: 'AAA'}
-                                                               })
-    end
-
-    it 'with array element' do
-      object = described_class.new(all_options.merge({display: {'base.first_setting' => 'string',
-                                                                'base.second_setting' => 'boolean',
-                                                                'base.six_setting' => 'array'}}))
-      expect(object.field_options('base.six_setting', 'base.six_setting')).to eq({as: 'array',
-                                                              label: false,
-                                                              collection: %w(a b),
-                                                              selected: %w(a b)
-                                                             })
+    it 'with number element' do
+      expect(object.field_options('user_limit')).to eq(as: :number, label: false,
+                                                       input_html: { value: '5', placeholder: '5' })
     end
 
     it 'with boolean element' do
-      object = described_class.new(all_options)
-      expect(object.field_options('base.second_setting', 'base.second_setting')).to eq({as: 'boolean',
-                                                                 label: '',
-                                                                 input_html: {checked: true},
-                                                                 checked_value: 'true',
-                                                                 unchecked_value: 'false'
-                                                                })
+      expect(object.field_options('captcha_enabled')).to eq(as: :boolean, label: '',
+                                                            input_html: { checked: true },
+                                                            checked_value: 'true', unchecked_value: 'false')
+    end
+
+    it 'with select element' do
+      expect(object.field_options('default_locale')).to eq(as: :select, label: false, collection: %w[en de ru],
+                                                           selected: 'en', include_blank: false,
+                                                           hint: 'Interface language')
+    end
+
+    it 'with array element' do
+      expect(object.field_options('admin_emails')).to eq(as: :text, label: false,
+                                                         input_html: { value: "a@example.com\nb@example.com",
+                                                                       placeholder: "a@example.com\nb@example.com",
+                                                                       rows: 5 })
+    end
+
+    it 'with hash element' do
+      expect(object.field_options('notification_options')[:input_html][:value]).to eq("send_all: true\n")
+    end
+
+    context 'with display option' do
+      let(:options) { { display: { title: :text } } }
+
+      it { expect(object.field_options('title')[:as]).to eq :text }
     end
   end
 
-  context '#settings' do
-    it 'normal settings' do
-      object = described_class.new(all_options)
-      expect(object.settings).to eq(Setting.get_all('base.'))
-    end
+  context '#changed?' do
+    let(:options) { {} }
 
-    it 'settings by key' do
-      object = described_class.new(key_options)
-      expect(object.settings).to eq(Setting['some'])
-    end
+    it { expect(object.changed?('user_limit', '5')).to eq false }
+    it { expect(object.changed?('user_limit', '6')).to eq true }
+    it { expect(object.changed?('captcha_enabled', 'true')).to eq false }
+    it { expect(object.changed?('admin_emails', "a@example.com\r\nb@example.com\r\n")).to eq false }
   end
 
   context '#save' do
-    it 'normal settings' do
-      object = described_class.new(all_options)
-      object.save('base.first_setting', 'DDD')
-      expect(Setting['base.first_setting']).to eq('DDD')
-    end
-
-    it 'settings by key' do
-      object = described_class.new(key_options)
-      object.save('some.first_setting', 'LLL')
-      expect(Setting['some']['first_setting']).to eq('LLL')
-    end
-  end
-
-  context '#defaults' do
-    it 'normal defaults' do
-      object = described_class.new(all_options)
-      expect(object.defaults).to eq(RailsSettings::Default)
-    end
-
-    it 'old defaults' do
-      allow(Setting).to receive(:defaults).and_return(RailsSettings::Default.instance)
-      object = described_class.new(all_options)
-      expect(object.defaults).to be_an_instance_of(RailsSettings::Default)
-    end
-  end
-
-  context '#defaults_keys' do
-    it 'normal defaults keys' do
-      object = described_class.new(all_options)
-      expect(object.defaults_keys).to eq(RailsSettings::Default.instance.keys)
+    it 'saves value' do
+      object.save('user_limit', '10')
+      expect(Setting.user_limit).to eq 10
     end
   end
 

@@ -7,19 +7,26 @@
           <th><%= t('settings.index.value')%></th>
         </tr>
       </thead>
-      <tbody>
-        <% settings_model.settings.each_pair do |name, _| %>
-          <% field_name = settings_model.field_name(name) %>
-          <tr class="odd">
-            <td><strong><%= f.label field_name, t("settings.attributes.#{field_name}", default: field_name) %></strong></td>
-            <td>
-              <div class='form'>
-                <ol><%= f.input field_name, settings_model.field_options(field_name, name) %></ol>
-              </div>
-            </td>
-          </tr>
-        <% end%>
-      </tbody>
+      <% settings_model.fields_by_scope.each_pair do |scope, fields| %>
+        <tbody>
+          <% if scope %>
+            <tr>
+              <th colspan="2"><%= t("settings.scopes.#{scope}", default: scope.to_s.humanize) %></th>
+            </tr>
+          <% end %>
+          <% fields.each do |field| %>
+            <% key = field[:key] %>
+            <tr class="odd">
+              <td><strong><%= f.label key, t("settings.attributes.#{key}", default: key) %></strong></td>
+              <td>
+                <div class='form'>
+                  <ol><%= f.input key, settings_model.field_options(key) %></ol>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
     </table>
     <%= f.submit %>
   <% end %>

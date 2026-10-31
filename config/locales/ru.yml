@@ -3,6 +3,7 @@ ru:
     settings:
       update:
         success: Настройки были успешно сохранены.
+        error: 'Не удалось сохранить настройки: %{details}'
 
   activerecord:
     models:

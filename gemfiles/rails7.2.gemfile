@@ -2,15 +2,13 @@
 
 source "https://rubygems.org"
 
-gem "rails", "~> 5.1.0"
-gem "inherited_resources"
-gem "listen"
+gem "rails", "~> 7.2.0"
+gem "sassc-rails"
+gem "sprockets-rails"
 
 group :test do
   gem "pry-byebug"
   gem "puma"
-  gem "therubyracer"
-  gem "sassc"
 end
 
 gemspec path: "../"
